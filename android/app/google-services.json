@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1026981074746",
+    "firebase_url": "https://pucpay-prototype.firebaseio.com",
+    "project_id": "pucpay-prototype",
+    "storage_bucket": "pucpay-prototype.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026981074746:android:04c1dcbaa65e178e",
+        "android_client_info": {
+          "package_name": "com.example.pucpay_prototype"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026981074746-vggfomq16drefvsuehni5fgnu6f65mm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgLlp3KgyoZd81_GNMCJ84MPbVrcH1iuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026981074746-vggfomq16drefvsuehni5fgnu6f65mm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

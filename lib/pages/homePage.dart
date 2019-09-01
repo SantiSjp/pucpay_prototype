@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'loginPage.dart';
 
 class Homepage extends StatelessWidget {
  
@@ -17,11 +18,11 @@ _showLogo(){
           children: <Widget>[
             Divider(height: 60, color: Colors.transparent),
             _showLogo(),
-            botao("Login",context),
+            botao("Login",context,LoginPage()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Cadastro",context),
+            botao("Cadastro",context,LoginPage()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Pagar via scan",context)
+            botao("Pagar via scan",context,LoginPage())
           ],
         )
       ),
@@ -30,12 +31,14 @@ _showLogo(){
 }
 
 
-Widget botao(text,context){
+Widget botao(text,context,route){
   return SizedBox(
     width: 130,
       child: ButtonTheme(
         child: RaisedButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => route));
+          },
           child: Text(text, style: TextStyle(color: Colors.white)),
           color: Color.fromRGBO(104, 104, 104, 10),   //Definindo Cor para botão,
         ),
