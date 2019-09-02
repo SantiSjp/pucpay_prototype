@@ -10,7 +10,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   _showLogo(){
   return Container(
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
@@ -90,8 +90,8 @@ void doLogin(BuildContext context,login,pass,_key) async{
   try{
    /* FirebaseUser user = (await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: 'santisjp@gmail.com', password: '123456')).user;*/
-    print('EMAIL é: ${login}');
-    print('SENHA é: ${pass}');
+    print('EMAIL é: $login');
+    print('SENHA é: $pass');
     FirebaseUser user = (await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: login, password: pass)).user;
 
@@ -101,7 +101,7 @@ void doLogin(BuildContext context,login,pass,_key) async{
       }*/
       print('Signed In: ${user.uid}');
       _key.currentState.showSnackBar(SnackBar(
-        content: Text("OKAY"),
+        content: Text("Logged In"),
         backgroundColor: Colors.green,
       ));
 
