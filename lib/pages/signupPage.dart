@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pucpay_prototype/pages/loginPage.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -126,6 +127,10 @@ void signUp(BuildContext context,name,mat,login,mail,pass,_key) async{
     
     Firestore.instance.collection('users').document("$login").setData({
       'user': mail,'pass':pass,'nome': name,'matricula':mat,'login':login});
+       
+        Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => LoginPage()),
+       (Route<dynamic> route) => false,
+      );
 
       _key.currentState.showSnackBar(SnackBar(
         content: Text("Signup Success"),

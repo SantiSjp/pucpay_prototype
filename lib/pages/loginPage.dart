@@ -2,15 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
+import 'package:pucpay_prototype/pages/menuPage.dart';
 
 class LoginPage extends StatefulWidget {
-  
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+ 
+  
 
   _showLogo(){
   return Container(
@@ -95,6 +99,12 @@ void doLogin(BuildContext context,login,pass,_key) async{
     Firestore.instance.collection('users').document('users').setData({'user': login,'pass':pass});
     FirebaseUser user = (await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: login, password: pass)).user;
+
+    if(user != null){
+      Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen(login)),
+       (Route<dynamic> route) => false,
+      );
+    }
 
       print('Signed In: ${user.uid}');
       _key.currentState.showSnackBar(SnackBar(
