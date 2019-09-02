@@ -25,7 +25,7 @@ class _ForgotPassState extends State<ForgotPass> {
       resizeToAvoidBottomInset: true,
     body: Padding(
         padding: EdgeInsets.only(
-          top: 60,
+          top: 30,
           left: 30,
           right: 30
         ),

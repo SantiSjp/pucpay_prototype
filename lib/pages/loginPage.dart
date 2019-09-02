@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 
@@ -26,7 +27,7 @@ final _pass = TextEditingController();
       key: _scaffoldKey,
       body: Padding(
         padding: EdgeInsets.only(
-          top: 60,
+          top: 30,
           left: 30,
           right: 30
         ),
@@ -88,16 +89,12 @@ final _pass = TextEditingController();
 
 void doLogin(BuildContext context,login,pass,_key) async{
   try{
-
+    
     print('EMAIL é: $login');
     print('SENHA é: $pass');
+    Firestore.instance.collection('users').document('users').setData({'user': login,'pass':pass});
     FirebaseUser user = (await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: login, password: pass)).user;
-
-      /*if(user != null){
-        _pass.text = '';
-        Navigator.pop(context);
-      }*/
 
       print('Signed In: ${user.uid}');
       _key.currentState.showSnackBar(SnackBar(

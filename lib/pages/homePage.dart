@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
+import 'signupPage.dart';
 
 class Homepage extends StatelessWidget {
  
@@ -20,7 +21,7 @@ class Homepage extends StatelessWidget {
             _showLogo(),
             botao("Login",context,LoginPage()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Cadastro",context,LoginPage()),
+            botao("Cadastro",context,Signup()),
             Divider(height: 40, color: Colors.transparent),
             botao("Pagar via scan",context,LoginPage())
           ],
