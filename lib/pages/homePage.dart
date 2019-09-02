@@ -3,11 +3,11 @@ import 'loginPage.dart';
 
 class Homepage extends StatelessWidget {
  
-_showLogo(){
+  _showLogo(){
   return Container(
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
   );
-}
+  }
 
   @override
  

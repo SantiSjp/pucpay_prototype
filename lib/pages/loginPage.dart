@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pucpay_prototype/pages/homePage.dart';
+import 'package:pucpay_prototype/pages/forgotPage.dart';
 
 class LoginPage extends StatefulWidget {
   
@@ -55,7 +55,7 @@ final _pass = TextEditingController();
                 children: <Widget>[
                 FlatButton(
                  onPressed: () {
-
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPass()));
                  },
                   child: const Text(
                   'Esqueci a senha',
@@ -88,8 +88,7 @@ final _pass = TextEditingController();
 
 void doLogin(BuildContext context,login,pass,_key) async{
   try{
-   /* FirebaseUser user = (await FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: 'santisjp@gmail.com', password: '123456')).user;*/
+
     print('EMAIL é: $login');
     print('SENHA é: $pass');
     FirebaseUser user = (await FirebaseAuth.instance
@@ -99,6 +98,7 @@ void doLogin(BuildContext context,login,pass,_key) async{
         _pass.text = '';
         Navigator.pop(context);
       }*/
+
       print('Signed In: ${user.uid}');
       _key.currentState.showSnackBar(SnackBar(
         content: Text("Logged In"),
@@ -111,6 +111,7 @@ void doLogin(BuildContext context,login,pass,_key) async{
         content: Text("ERRO Verefique seu Login"),
         backgroundColor: Colors.redAccent,
       ));
+     //Navigator.pop(context);    
   }
   FocusScope.of(context).requestFocus(new FocusNode());
 }
