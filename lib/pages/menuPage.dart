@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
+  const MenuScreen(this.log);
 
   final String log;
-
-  const MenuScreen(this.log);
 
   _show(){                                //Método Privado para exibir o logo da PucPAY
     return Container(
@@ -30,7 +29,6 @@ _navigateToInitialPage(context) {
     //Navigator.popUntil(context, ModalRoute.withName('/login'));
     Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -140,12 +138,23 @@ _navigateToInitialPage(context) {
 }
 
  getData(){
+
+//var a = Firestore.instance.collection('users').where('login',isEqualTo:'santi').snapshots()
+
+  CollectionReference col = Firestore.instance.collection("users");
+
+  Query nameQuery = col.where('nome', isEqualTo:'gabriel');
+
+  Query valorNameQuery = nameQuery.where('login', isEqualTo: 'gab.b');
+
+  print(valorNameQuery);
+
    Firestore.instance
         .collection('users')
-        .document('gab.n')
+        .document('gab.b')
         .get()
         .then((DocumentSnapshot ds) {
-      // use ds as a snapshot
+      // use ds as a snapshots
         dynamic a = (ds.data.values.toList());
         print(a);
     });

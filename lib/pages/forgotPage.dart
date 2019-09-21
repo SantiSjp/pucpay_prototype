@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPass extends StatefulWidget {
-  
   @override
   _ForgotPassState createState() => _ForgotPassState();
 }
 
 class _ForgotPassState extends State<ForgotPass> {
+  final _login = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   _showLogo(){
@@ -15,8 +15,6 @@ class _ForgotPassState extends State<ForgotPass> {
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
     );
   }
-
-  final _login = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
