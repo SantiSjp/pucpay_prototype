@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'loginPage.dart';
+import 'signupPage.dart';
 
 class Homepage extends StatelessWidget {
  
-_showLogo(){
+  _showLogo(){
   return Container(
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
   );
-}
+  }
 
   @override
  
@@ -17,11 +19,11 @@ _showLogo(){
           children: <Widget>[
             Divider(height: 60, color: Colors.transparent),
             _showLogo(),
-            botao("Login",context),
+            botao("Login",context,LoginPage()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Cadastro",context),
+            botao("Cadastro",context,Signup()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Pagar via scan",context)
+            botao("Pagar via scan",context,LoginPage())
           ],
         )
       ),
@@ -30,12 +32,14 @@ _showLogo(){
 }
 
 
-Widget botao(text,context){
+Widget botao(text,context,route){
   return SizedBox(
     width: 130,
       child: ButtonTheme(
         child: RaisedButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => route));
+          },
           child: Text(text, style: TextStyle(color: Colors.white)),
           color: Color.fromRGBO(104, 104, 104, 10),   //Definindo Cor para botão,
         ),
