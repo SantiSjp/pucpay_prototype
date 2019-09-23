@@ -25,10 +25,14 @@ class MenuScreen extends StatelessWidget {
  }
 
 _navigateToInitialPage(context) {
-
-    //Navigator.pushReplacementNamed(context, "/menu");
-    //Navigator.popUntil(context, ModalRoute.withName('/login'));
     Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+}
+
+_nextScreen(context, Widget route){
+  Navigator.push(
+    context, 
+    new MaterialPageRoute(builder: (context) => route),
+    );
 }
 
   @override
@@ -102,7 +106,7 @@ _navigateToInitialPage(context) {
                height:50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  nextScreen(context);
+                  _nextScreen(context, InsertCredits());
                 },
                 child: Text("Inserir créditos na carteirinha",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
@@ -139,14 +143,6 @@ _navigateToInitialPage(context) {
 );
 }
 }
-
-nextScreen(context){
-  Navigator.push(
-    context, 
-    new MaterialPageRoute(builder: (context) => new InsertCredits()),
-    );
-}
-
 
  getData(){
 
