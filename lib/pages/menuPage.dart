@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pucpay_prototype/pages/manageCredits.dart';
 import 'insertCreditsPage.dart';
 //import 'loginPage.dart';
 
@@ -73,7 +74,7 @@ _nextScreen(context, Widget route){
           ],
         ),
         Divider(height: 20,color: Colors.white,),
-        Text('Menu PucPAY',
+        Text('Menu PUCpay',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         Divider(height: 20,color: Colors.white),
          ButtonTheme(
@@ -94,7 +95,9 @@ _nextScreen(context, Widget route){
                width: 270,
                height: 50 ,
                 child: RaisedButton(
-                onPressed: (){},
+                onPressed: (){
+                  _nextScreen(context, ManageCredits());
+                },
                 child: Text("Visualizar crédito da carteirinha",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),

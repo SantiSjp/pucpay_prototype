@@ -18,7 +18,9 @@ class _InsertCreditsState extends State<InsertCredits> {
       appBar: AppBar(
         title: Center(child: Text("PucPay",textAlign: TextAlign.center))
       ),
-      body: ListView(
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: ListView(
         padding: const EdgeInsets.all(8),
         children: <Widget>[
           Padding(padding: const EdgeInsets.only(bottom:20,),),
@@ -29,7 +31,8 @@ class _InsertCreditsState extends State<InsertCredits> {
             )
           ),
         
-          Padding(padding: const EdgeInsets.only(bottom:40,),),
+          //Padding(padding: const EdgeInsets.only(bottom:40,),),
+          Divider(height: 40,color: Colors.transparent,),
           Align(
             alignment: Alignment.bottomLeft,
             child: new Text(
@@ -42,11 +45,11 @@ class _InsertCreditsState extends State<InsertCredits> {
           CheckboxListTile(
             title: Row(
               children: <Widget>[
-                Image.asset("assets/autopark_logo.png",width: 110.0 ,height: 60.0,),
+                Image.asset("assets/autopark_logo.png",width: 70.0 ,height: 60.0,),
                 Padding(padding: const EdgeInsets.only(right:25,),),
                 Text(
                   'Estacionamento',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -67,11 +70,11 @@ class _InsertCreditsState extends State<InsertCredits> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Image.asset("assets/logo_selbetti.png",width: 120.0 ,height: 60.0,),
-                Padding(padding: const EdgeInsets.only(right:20,),),
+                Image.asset("assets/logo_selbetti.png",width: 70.0 ,height: 60.0,),
+                Padding(padding: const EdgeInsets.only(right:25,),),
                 Text(
-                  'Impressao',
-                  style: TextStyle(fontSize: 20),
+                  'Impressão',
+                  style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -87,7 +90,8 @@ class _InsertCreditsState extends State<InsertCredits> {
             },
           ),       
 
-          Padding(padding: const EdgeInsets.only(bottom:40,),),
+          //Padding(padding: const EdgeInsets.only(bottom:40,),),
+          Divider(height: 40,color: Colors.transparent,),
           TextFormField(
             style: new TextStyle(color: Colors.black, fontSize: 15),
             decoration: InputDecoration(
@@ -95,24 +99,25 @@ class _InsertCreditsState extends State<InsertCredits> {
             )
           ),
 
-          Padding(padding: const EdgeInsets.only(bottom:50,),),
+          //Padding(padding: const EdgeInsets.only(bottom:50,),),
+          Divider(height: 50,color: Colors.transparent,),
           
           Row(
             children: <Widget>[
-              Padding(padding: const EdgeInsets.only(right:20,),),
+              //Padding(padding: const EdgeInsets.only(right:10,),),
               ButtonTheme(
                child: SizedBox(
                width: 130,
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-
+                  Navigator.pop(context);
                 },
                 child: Text("Voltar",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
 
-              Padding(padding: const EdgeInsets.only(right:90,),),
+              Padding(padding: const EdgeInsets.only(right:40,),),
               ButtonTheme(
                child: SizedBox(
                width: 130,
@@ -129,7 +134,8 @@ class _InsertCreditsState extends State<InsertCredits> {
           
         ],
       ),
-     
+      ) 
+
     );
   }
 }
