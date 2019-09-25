@@ -3,27 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
+import 'package:pucpay_prototype/global.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _login = TextEditingController();
+  final _pass = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
- 
-  
 
   _showLogo(){
   return Container(
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
   );
 }
-
-final _login = TextEditingController();
-final _pass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +39,7 @@ final _pass = TextEditingController();
             //autofocus: true,
               style: new TextStyle(color: Colors.black, fontSize: 15),
               decoration: InputDecoration(
-              labelText: 'Insira seu usuário'
+              labelText: 'Insira seu email'
             ),
           ),
             Divider(height: 10, color: Colors.white),
@@ -72,9 +68,26 @@ final _pass = TextEditingController();
                 height: 0,
               ),
               RaisedButton(
-                onPressed: () {
+                onPressed: () async {
                   doLogin(context, _login.text, _pass.text,_scaffoldKey);
-                },
+                  /*try{
+                    var r = await conn.mutation(docInsert);
+                    print(r['data']);
+                    var a = (r['data']);
+                    print(a['insert_teste']);
+                    var b = a['insert_teste'];
+                    var c = b.map<int>((m) => m['id'] as int).toList();
+                    var d = b.map<String>((m) => m['name'] as String).toList();
+                    print(c);
+                    print(d);
+                    if(c != []){print("SDSDAS");}
+                    //var b =(a['teste']) as String;
+                    //print(b);
+
+                  }catch(e){
+                    print(e);
+                  }*/
+                  },
                 child: const Text(
                   'LOGIN',
                   style: TextStyle(fontSize: 10)
@@ -85,7 +98,7 @@ final _pass = TextEditingController();
               )
             )
       ]
-      )
+      ),
     ),
     );
   }
@@ -93,7 +106,8 @@ final _pass = TextEditingController();
 
 void doLogin(BuildContext context,login,pass,_key) async{
   try{
-    
+
+
     print('EMAIL é: $login');
     print('SENHA é: $pass');
     Firestore.instance.collection('users').document('users').setData({'user': login,'pass':pass});
@@ -113,9 +127,20 @@ void doLogin(BuildContext context,login,pass,_key) async{
       ));
 
   } catch(e){
-    print("Error: ${e.toString()}");
+    if(e.code == 'ERROR_USER_NOT_FOUND'){
+      error = ("Error: User not Found ");
+    }
+    else if( e.code == 'ERROR_WRONG_PASSWORD'){
+      error =  ("Error: Wrong Password ");
+    }
+    else if(e.code == 'ERROR_INVALID_EMAIL'){
+      error = ("Invalid email adress");
+    }else{
+      error = ("Unknown Error -  Verify your credentials");
+    }
+    print("Error: ${e.code}");
     _key.currentState.showSnackBar(SnackBar(
-        content: Text("ERRO Verefique seu Login"),
+        content: Text(error),
         backgroundColor: Colors.redAccent,
       ));
      //Navigator.pop(context);    

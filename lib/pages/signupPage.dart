@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/loginPage.dart';
+import 'package:pucpay_prototype/global.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -24,6 +25,8 @@ class _SignupState extends State<Signup> {
   final _mail = TextEditingController();
   final _pass = TextEditingController();
   
+
+
   
   @override
   Widget build(BuildContext context) {
@@ -114,7 +117,15 @@ class _SignupState extends State<Signup> {
 }
 
 void signUp(BuildContext context,name,mat,login,mail,pass,_key) async{
-  try{
+  
+   try{
+
+    String docInsert = cad(mail, login, mat, name, pass);
+
+    var r = await conn.mutation(docInsert);
+
+    print (r);
+
     FirebaseUser user = (await FirebaseAuth.instance.createUserWithEmailAndPassword( 
       email: mail,
       password: pass 
@@ -136,11 +147,13 @@ void signUp(BuildContext context,name,mat,login,mail,pass,_key) async{
         content: Text("Signup Success"),
         backgroundColor: Colors.green,
       ));
+
+
   }catch(e){
     print("Error: ${e.toString()}");
 
     _key.currentState.showSnackBar(SnackBar(
-        content: Text("ERRO Verefique seus dados"),
+        content: Text("ERRO Verifique seus dados"),
         backgroundColor: Colors.redAccent,
       ));
   }
