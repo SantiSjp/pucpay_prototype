@@ -10,7 +10,11 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  
+  final _login = TextEditingController();
+  final _mail = TextEditingController();
+  final _mat = TextEditingController();
+  final _name = TextEditingController();
+  final _pass = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   _showLogo(){
@@ -19,15 +23,6 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  final _name = TextEditingController();
-  final _mat = TextEditingController();
-  final _login = TextEditingController();
-  final _mail = TextEditingController();
-  final _pass = TextEditingController();
-  
-
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
