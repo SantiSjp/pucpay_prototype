@@ -69,7 +69,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               RaisedButton(
                 onPressed: () async {
-                  doLogin(context, _login.text, _pass.text,_scaffoldKey);
+                
+                 doLogin(context, _login.text, _pass.text,_scaffoldKey);
                   /*try{
                     var r = await conn.mutation(docInsert);
                     print(r['data']);
@@ -107,12 +108,14 @@ class _LoginPageState extends State<LoginPage> {
 void doLogin(BuildContext context,login,pass,_key) async{
   try{
 
-
     print('EMAIL é: $login');
     print('SENHA é: $pass');
     Firestore.instance.collection('users').document('users').setData({'user': login,'pass':pass});
     FirebaseUser user = (await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: login, password: pass)).user;
+
+    user_id = user.uid;
+    print(user_id);
 
     if(user != null){
       Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen(login)),

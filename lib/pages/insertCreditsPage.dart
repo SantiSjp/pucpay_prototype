@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pucpay_prototype/global.dart';
 
 enum TipoDeCredito {Impressao, Estacionamento}
 int _tipoCredito = 0;
@@ -12,6 +13,8 @@ class InsertCredits extends StatefulWidget {
 }
 
 class _InsertCreditsState extends State<InsertCredits> {
+final _credito = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +66,7 @@ class _InsertCreditsState extends State<InsertCredits> {
                 botaoImpressao = false;
                 });
             },
-            
+  
           ),
 
           CheckboxListTile(
@@ -93,6 +96,7 @@ class _InsertCreditsState extends State<InsertCredits> {
           //Padding(padding: const EdgeInsets.only(bottom:40,),),
           Divider(height: 40,color: Colors.transparent,),
           TextFormField(
+            controller: _credito,
             style: new TextStyle(color: Colors.black, fontSize: 15),
             decoration: InputDecoration(
               labelText: 'Digite o valor a inserir...'
@@ -124,7 +128,7 @@ class _InsertCreditsState extends State<InsertCredits> {
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-
+                  insertCredits(_credito.text);
                 },
                 child: Text("Confirmar",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
@@ -137,5 +141,29 @@ class _InsertCreditsState extends State<InsertCredits> {
       ) 
 
     );
+  }
+}
+
+
+void insertCredits(credito) async{
+
+  String insert;
+
+  if(botaoEstacionamento){
+    insert = insertCredit(user_id, credito, 1);
+    print('1');
+  }
+  if(botaoImpressao){
+      insert = insertCredit(user_id, credito, 2);
+      print('2');
+  }
+
+  try {
+
+    var aux = await conn.mutation(insert);
+    print(aux);
+    
+  }catch (e) {
+    print(e);
   }
 }

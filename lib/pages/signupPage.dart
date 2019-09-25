@@ -130,10 +130,15 @@ void signUp(BuildContext context,name,mat,login,mail,pass,_key) async{
     print('NOME é: $name');
     print('Matricula é: $mat');
     print('Login é: $login');
+    print('Seu UID é: ${user.uid}');
+
+    String updateUID = insertUid(user.uid, mail);
+    var aux = await conn.mutation(updateUID);
+    print(aux);
     
     Firestore.instance.collection('users').document("$login").setData({
       'user': mail,'pass':pass,'nome': name,'matricula':mat,'login':login});
-       
+      
         Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => LoginPage()),
        (Route<dynamic> route) => false,
       );

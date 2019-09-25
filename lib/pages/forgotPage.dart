@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pucpay_prototype/global.dart';
 
 class ForgotPass extends StatefulWidget {
   @override

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/manageCredits.dart';
 import 'insertCreditsPage.dart';
+import 'package:pucpay_prototype/global.dart';
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -133,6 +134,8 @@ _nextScreen(context, Widget route){
                height:50 ,
                 child: FlatButton(
                 onPressed: (){
+                  user_id = 0;
+                  print(user_id);
                   _navigateToInitialPage(context);
                 },
                 child: Text("Logout",style: TextStyle(color: Colors.white),),
