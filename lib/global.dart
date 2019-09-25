@@ -78,5 +78,32 @@ return getUserID;
 }
 
 
+String getCreditos(uid, tipoCredito){
+
+  String creditos;
+
+  if(tipoCredito == 1){
+  creditos = """
+  query {
+  cadastro(where: {UID: {_eq: "$uid"}}) {
+    credit_est
+  }
+}
+""";
+}
+
+  if(tipoCredito == 2){
+    creditos = """
+  query {
+  cadastro(where: {UID: {_eq: "$uid"}}) {
+    credit_imp
+  }
+}
+""";
+  }
+
+  return creditos;
+}
+
   
  

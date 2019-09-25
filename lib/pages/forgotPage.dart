@@ -40,13 +40,7 @@ class _ForgotPassState extends State<ForgotPass> {
             ),
           ),
             Divider(height: 10, color: Colors.white,),
-            TextFormField(
-             obscureText: false,
-             style: new TextStyle(color: Colors.black, fontSize: 15),
-              decoration: InputDecoration(
-              labelText: 'Insira sua Matrícula'
-               ),
-              ),
+
             Container(
               child: Column(
                 children: <Widget>[
@@ -79,7 +73,7 @@ void forgot(_login,_key) async{
     );
     _key.currentState.showSnackBar(SnackBar(
         content: Text("Email enviado"),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.blueAccent,
       ));
   }catch(e){
    print("Error: ${e.toString()}");

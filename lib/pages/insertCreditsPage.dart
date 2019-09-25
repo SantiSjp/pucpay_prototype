@@ -14,10 +14,12 @@ class InsertCredits extends StatefulWidget {
 
 class _InsertCreditsState extends State<InsertCredits> {
 final _credito = TextEditingController();
+final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Center(child: Text("PucPay",textAlign: TextAlign.center))
       ),
@@ -129,6 +131,14 @@ final _credito = TextEditingController();
                 child: RaisedButton(
                 onPressed: (){
                   insertCredits(_credito.text);
+                  setState(() {
+                   botaoEstacionamento = false;
+                   botaoImpressao = false; 
+                  });
+                  _scaffoldKey.currentState.showSnackBar(SnackBar(
+                  content: Text("Creditos Inseridos"),
+                  backgroundColor: Colors.green,
+                ));
                 },
                 child: Text("Confirmar",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
@@ -162,8 +172,10 @@ void insertCredits(credito) async{
 
     var aux = await conn.mutation(insert);
     print(aux);
-    
+
+   //Navigator.pop(context);   
   }catch (e) {
     print(e);
   }
+  
 }

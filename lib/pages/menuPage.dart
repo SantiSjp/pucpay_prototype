@@ -41,7 +41,7 @@ _nextScreen(context, Widget route){
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-        title: Center(child: Text("PucPAY",textAlign: TextAlign.center)
+        title: Center(child: Text("PUCpay",textAlign: TextAlign.center)
         ),
       ),
   body: Container(
