@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'insertCreditsPage.dart';
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -24,10 +25,14 @@ class MenuScreen extends StatelessWidget {
  }
 
 _navigateToInitialPage(context) {
-
-    //Navigator.pushReplacementNamed(context, "/menu");
-    //Navigator.popUntil(context, ModalRoute.withName('/login'));
     Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+}
+
+_nextScreen(context, Widget route){
+  Navigator.push(
+    context, 
+    new MaterialPageRoute(builder: (context) => route),
+    );
 }
 
   @override
@@ -100,7 +105,9 @@ _navigateToInitialPage(context) {
                width: 270,
                height:50 ,
                 child: RaisedButton(
-                onPressed: (){},
+                onPressed: (){
+                  _nextScreen(context, InsertCredits());
+                },
                 child: Text("Inserir créditos na carteirinha",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),
