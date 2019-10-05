@@ -69,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               RaisedButton(
                 onPressed: () async {
-                
                  doLogin(context, _login.text, _pass.text,_scaffoldKey);
                   /*try{
                     var r = await conn.mutation(docInsert);
