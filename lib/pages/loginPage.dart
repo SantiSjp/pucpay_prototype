@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
@@ -69,7 +67,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               RaisedButton(
                 onPressed: () async {
-                 doLogin(context, _login.text, _pass.text,_scaffoldKey);
+                  print("LOGIN");
+                 //doLogin(context, _login.text, _pass.text,_scaffoldKey);
                   /*try{
                     var r = await conn.mutation(docInsert);
                     print(r['data']);
@@ -109,37 +108,15 @@ void doLogin(BuildContext context,login,pass,_key) async{
 
     print('EMAIL é: $login');
     print('SENHA é: $pass');
-    Firestore.instance.collection('users').document('users').setData({'user': login,'pass':pass});
-    FirebaseUser user = (await FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: login, password: pass)).user;
 
-    user_id = user.uid;
-    print(user_id);
 
-    if(user != null){
-      Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen(login)),
-       (Route<dynamic> route) => false,
-      );
-    }
 
-      print('Signed In: ${user.uid}');
       _key.currentState.showSnackBar(SnackBar(
         content: Text("Logged In"),
         backgroundColor: Colors.green,
       ));
 
   } catch(e){
-    if(e.code == 'ERROR_USER_NOT_FOUND'){
-      error = ("Error: User not Found ");
-    }
-    else if( e.code == 'ERROR_WRONG_PASSWORD'){
-      error =  ("Error: Wrong Password ");
-    }
-    else if(e.code == 'ERROR_INVALID_EMAIL'){
-      error = ("Invalid email adress");
-    }else{
-      error = ("Unknown Error -  Verify your credentials");
-    }
     print("Error: ${e.code}");
     _key.currentState.showSnackBar(SnackBar(
         content: Text(error),

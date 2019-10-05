@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/loginPage.dart';
 import 'package:pucpay_prototype/global.dart';
@@ -117,27 +115,15 @@ void signUp(BuildContext context,name,mat,login,mail,pass,_key) async{
 
     String docInsert = cad(mail, login, mat, name, pass);
 
-    var r = await conn.mutation(docInsert);
+      var r = await conn.mutation(docInsert);
 
-    print (r);
+      print (r);
 
-    FirebaseUser user = (await FirebaseAuth.instance.createUserWithEmailAndPassword( 
-      email: mail,
-      password: pass 
-      )).user;
-    print('EMAIL é: $mail');
-    print('SENHA é: $pass');
-    print('NOME é: $name');
-    print('Matricula é: $mat');
-    print('Login é: $login');
-    print('Seu UID é: ${user.uid}');
-
-    String updateUID = insertUid(user.uid, mail);
-    var aux = await conn.mutation(updateUID);
-    print(aux);
-    
-    Firestore.instance.collection('users').document("$login").setData({
-      'user': mail,'pass':pass,'nome': name,'matricula':mat,'login':login});
+      print('EMAIL é: $mail');
+      print('SENHA é: $pass');
+      print('NOME é: $name');
+      print('Matricula é: $mat');
+      print('Login é: $login');
       
         Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => LoginPage()),
        (Route<dynamic> route) => false,

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
 
@@ -67,10 +66,7 @@ class _ForgotPassState extends State<ForgotPass> {
 
 void forgot(_login,_key) async{
   try{
-    var user = FirebaseAuth.instance.sendPasswordResetEmail(
-      email: _login
     
-    );
     _key.currentState.showSnackBar(SnackBar(
         content: Text("Email enviado"),
         backgroundColor: Colors.blueAccent,
