@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/manageCredits.dart';
 import 'insertCreditsPage.dart';
@@ -134,8 +133,8 @@ _nextScreen(context, Widget route){
                height:50 ,
                 child: FlatButton(
                 onPressed: (){
-                  user_id = 0;
-                  print(user_id);
+                  userId = 0;
+                  print(userId);
                   _navigateToInitialPage(context);
                 },
                 child: Text("Logout",style: TextStyle(color: Colors.white),),
@@ -154,22 +153,5 @@ _nextScreen(context, Widget route){
 
 //var a = Firestore.instance.collection('users').where('login',isEqualTo:'santi').snapshots()
 
-  CollectionReference col = Firestore.instance.collection("users");
-
-  Query nameQuery = col.where('nome', isEqualTo:'gabriel');
-
-  Query valorNameQuery = nameQuery.where('login', isEqualTo: 'gab.b');
-
-  print(valorNameQuery);
-
-   Firestore.instance
-        .collection('users')
-        .document('gab.b')
-        .get()
-        .then((DocumentSnapshot ds) {
-      // use ds as a snapshots
-        dynamic a = (ds.data.values.toList());
-        print(a);
-    });
  
 }

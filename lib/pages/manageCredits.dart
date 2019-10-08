@@ -93,7 +93,7 @@ class ManageCredits extends StatelessWidget {
 
  dynamic getCreditoEst() async{
 
-  String query = getCreditos(user_id,1);
+  String query = getCreditos(userId,1);
     var aux = await conn.query(query);
     print(aux);
     var aux2 = aux['data'];

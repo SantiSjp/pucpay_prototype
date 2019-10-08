@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               RaisedButton(
                 onPressed: () async {
                   print("LOGIN");
-                 //doLogin(context, _login.text, _pass.text,_scaffoldKey);
+                  doLogin(context, _login.text, _pass.text,_scaffoldKey);
                   /*try{
                     var r = await conn.mutation(docInsert);
                     print(r['data']);
@@ -109,7 +109,40 @@ void doLogin(BuildContext context,login,pass,_key) async{
     print('EMAIL é: $login');
     print('SENHA é: $pass');
 
+    if(login == ""){
+      throw new Exception("Empty_Mail_Error");
+    }
+    if(pass == ""){
+      throw new Exception("Empty_pass_Error");
+    }
 
+
+    String userLog = getUserLog(login,pass);
+
+    var verifyLog = await conn.query(userLog).catchError((e){
+      throw new Exception("ERROR");
+    });
+
+    var dataLog = verifyLog['data']['cadastro'];
+
+    print(dataLog);
+
+    var uid = dataLog.map<String>((m) => m['UID'] as String);
+    var nome = dataLog.map<String>((m) => m['nome'] as String);
+    var matricula = dataLog.map<int>((m) => m['matricula'] as int);
+
+    print(uid.toString());
+    print(nome.isEmpty.toString());
+    print(matricula.isEmpty.toString());
+
+
+    if(uid.isEmpty || nome.isEmpty || matricula.isEmpty){
+      throw new Exception("Usuario inválido");
+    }
+
+    userId = uid.toString();
+    nome_user = nome.toString();
+    matricula_user = matricula_user.toString();
 
       _key.currentState.showSnackBar(SnackBar(
         content: Text("Logged In"),
@@ -117,12 +150,12 @@ void doLogin(BuildContext context,login,pass,_key) async{
       ));
 
   } catch(e){
-    print("Error: ${e.code}");
+    print(e.toString());
+
     _key.currentState.showSnackBar(SnackBar(
-        content: Text(error),
-        backgroundColor: Colors.redAccent,
-      ));
-     //Navigator.pop(context);    
+      content: Text(e.message),
+      backgroundColor: Colors.redAccent,
+    ));  
   }
   FocusScope.of(context).requestFocus(new FocusNode());
 }

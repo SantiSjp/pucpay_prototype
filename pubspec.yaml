@@ -20,8 +20,7 @@ dependencies:
   build_runner:
   json_serializable: ^3.2.2
   hasura_connect:
-  cloud_firestore:
-  firebase_auth:
+  uuid: ^2.0.2
   flutter:
     sdk: flutter
 
