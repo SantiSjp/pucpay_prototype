@@ -42,6 +42,7 @@ return updateUid;
 
 String insertCredit(uid,credito, tipoCredito){
 
+
   String insertCredits;
   if(tipoCredito == 1){
     insertCredits = """

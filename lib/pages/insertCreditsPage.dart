@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
 
@@ -99,6 +101,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
           Divider(height: 40,color: Colors.transparent,),
           TextFormField(
             controller: _credito,
+            keyboardType: TextInputType.number,
             style: new TextStyle(color: Colors.black, fontSize: 15),
             decoration: InputDecoration(
               labelText: 'Digite o valor a inserir...'
@@ -130,15 +133,11 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  insertCredits(_credito.text);
+                  insertCredits(_credito.text, _scaffoldKey);
                   setState(() {
                    botaoEstacionamento = false;
                    botaoImpressao = false; 
                   });
-                  _scaffoldKey.currentState.showSnackBar(SnackBar(
-                  content: Text("Creditos Inseridos"),
-                  backgroundColor: Colors.green,
-                ));
                 },
                 child: Text("Confirmar",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
@@ -155,27 +154,96 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
 
-void insertCredits(credito) async{
+void insertCredits(credito, _key) async{
 
   String insert;
+  var valor;
+  int c;
+  print("aqui");
 
+try {
+
+  valor = await _getCredito();
+  c = int.parse(credito);
+  c += valor;
+
+  if(!botaoEstacionamento && !botaoImpressao){
+    throw new Exception("Selecione um tipo de credito");
+  }
+  
   if(botaoEstacionamento){
-    insert = insertCredit(userId, credito, 1);
+    insert = insertCredit(userId, c, 1);
     print('1');
   }
   if(botaoImpressao){
-      insert = insertCredit(userId, credito, 2);
+      insert = insertCredit(userId, c, 2);
       print('2');
   }
 
-  try {
+ 
 
-    var aux = await conn.mutation(insert);
-    print(aux);
+    var aux2 = await conn.mutation(insert);
+    print("insert: " + aux2.toString());
+
+    _key.currentState.showSnackBar(SnackBar(
+    content: Text("Creditos Inseridos"),
+    backgroundColor: Colors.green,
+    ));
 
    //Navigator.pop(context);   
   }catch (e) {
     print(e);
+
+     _key.currentState.showSnackBar(SnackBar(
+      content: Text(e.toString()),
+      backgroundColor: Colors.redAccent,
+    ));
   }
   
+}
+
+Future<int> _getCredito() async{
+  
+  String credEst;
+  String credImp;
+  int value = 0;
+  
+  try {
+
+    if(botaoEstacionamento){
+
+      credEst = getCreditos(userId, 1);
+
+      var aux = await conn.query(credEst);
+      print("have: " + aux.toString());
+
+      var a = aux['data']['cadastro'];
+      print(a);
+
+      var b = a.map<int>((m) => m['credit_est'] as int).toList();
+      print(b[0]);
+      value = b[0];
+;
+    }
+    if(botaoImpressao){
+      credImp = getCreditos(userId, 2);
+
+      var aux = await conn.query(credImp);
+      print("have: " + aux.toString());
+
+      var a = aux['data']['cadastro'];
+      print(a);
+
+      var b = a.map<int>((m) => m['credit_imp'] as int).toList();
+      print(b[0]);
+      value = b[0];
+
+    }
+    
+  } catch (e) {
+
+    print(e);
+
+  }
+  return value;
 }
