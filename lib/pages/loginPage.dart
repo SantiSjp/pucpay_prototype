@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
@@ -127,27 +129,30 @@ void doLogin(BuildContext context,login,pass,_key) async{
 
     print(dataLog);
 
-    var uid = dataLog.map<String>((m) => m['UID'] as String);
-    var nome = dataLog.map<String>((m) => m['nome'] as String);
-    var matricula = dataLog.map<int>((m) => m['matricula'] as int);
+    var uid = dataLog.map<String>((m) => m['UID'] as String).toList();
+    var nome = dataLog.map<String>((m) => m['nome'] as String).toList();
+    var matricula = dataLog.map<int>((m) => m['matricula'] as int).toList();
 
-    print(uid.toString());
-    print(nome.isEmpty.toString());
-    print(matricula.isEmpty.toString());
+    print(uid.isEmpty);
+    print(nome.isEmpty);
+    print(matricula.isEmpty);
 
 
     if(uid.isEmpty || nome.isEmpty || matricula.isEmpty){
       throw new Exception("Usuario inválido");
     }
 
-    userId = uid.toString();
-    nome_user = nome.toString();
-    matricula_user = matricula_user.toString();
+    userId = uid[0];
+    nomeUser = nome[0];
+    matriculaUser = matricula[0];
 
       _key.currentState.showSnackBar(SnackBar(
         content: Text("Logged In"),
         backgroundColor: Colors.green,
       ));
+
+     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen()),
+            (Route<dynamic> route) => false,);
 
   } catch(e){
     print(e.toString());

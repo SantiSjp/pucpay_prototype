@@ -8,8 +8,8 @@ String error;
 HasuraConnect conn = HasuraConnect(url);
 
 var userId;
-var nome_user;
-var matricula_user;
+var nomeUser;
+var matriculaUser;
 
 String cadUser(var uid, var mail, var login, var mat, var name, var pass){
 String insertCad = """

@@ -5,9 +5,6 @@ import 'package:pucpay_prototype/global.dart';
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
-  const MenuScreen(this.log);
-
-  final String log;
 
   _show(){                                //Método Privado para exibir o logo da PucPAY
     return Container(
@@ -55,14 +52,14 @@ _nextScreen(context, Widget route){
                 Container(
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
-                '$log',
+                'Aluno: $nomeUser',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             Text(
-              'Matrícula: xxxxx',
+              'Matrícula: $matriculaUser',
               style: TextStyle(
                 color: Colors.grey[500],
               ),
@@ -134,6 +131,8 @@ _nextScreen(context, Widget route){
                 child: FlatButton(
                 onPressed: (){
                   userId = 0;
+                  nomeUser = '';
+                  matriculaUser = 0;
                   print(userId);
                   _navigateToInitialPage(context);
                 },
