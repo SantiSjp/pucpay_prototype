@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
 
@@ -133,7 +131,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  insertCredits(_credito.text, _scaffoldKey);
+                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao);
                   setState(() {
                    botaoEstacionamento = false;
                    botaoImpressao = false; 
@@ -154,7 +152,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
 
-void insertCredits(credito, _key) async{
+void insertCredits(credito, _key, bEstacionamento,bImpressao) async{
 
   String insert;
   var valor;
@@ -163,24 +161,22 @@ void insertCredits(credito, _key) async{
 
 try {
 
-  valor = await _getCredito();
+  valor = await _getCredito(bEstacionamento,bImpressao);
+  print("here: " + valor.toString());
+
   c = int.parse(credito);
   c += valor;
 
-  if(!botaoEstacionamento && !botaoImpressao){
+  if(!bEstacionamento && !bImpressao){
     throw new Exception("Selecione um tipo de credito");
   }
   
-  if(botaoEstacionamento){
+  if(bEstacionamento){
     insert = insertCredit(userId, c, 1);
-    print('1');
   }
-  if(botaoImpressao){
+  if(bImpressao){
       insert = insertCredit(userId, c, 2);
-      print('2');
   }
-
- 
 
     var aux2 = await conn.mutation(insert);
     print("insert: " + aux2.toString());
@@ -195,14 +191,14 @@ try {
     print(e);
 
      _key.currentState.showSnackBar(SnackBar(
-      content: Text(e.toString()),
+      content: Text(e.message),
       backgroundColor: Colors.redAccent,
     ));
   }
   
 }
 
-Future<int> _getCredito() async{
+Future<int> _getCredito(bEstacionamento,bImpressao) async{
   
   String credEst;
   String credImp;
@@ -210,7 +206,7 @@ Future<int> _getCredito() async{
   
   try {
 
-    if(botaoEstacionamento){
+    if(bEstacionamento){
 
       credEst = getCreditos(userId, 1);
 
@@ -223,9 +219,9 @@ Future<int> _getCredito() async{
       var b = a.map<int>((m) => m['credit_est'] as int).toList();
       print(b[0]);
       value = b[0];
-;
+
     }
-    if(botaoImpressao){
+    if(bImpressao){
       credImp = getCreditos(userId, 2);
 
       var aux = await conn.query(credImp);
