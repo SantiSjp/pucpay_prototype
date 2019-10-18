@@ -10,6 +10,8 @@ HasuraConnect conn = HasuraConnect(url);
 var userId;
 var nomeUser;
 var matriculaUser;
+int cEst;
+int cImp;
 
 String cadUser(var uid, var mail, var login, var mat, var name, var pass){
 String insertCad = """

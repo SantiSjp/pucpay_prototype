@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'insertCreditsPage.dart';
 
 class ManageCredits extends StatelessWidget {
   @override
@@ -32,7 +33,7 @@ class ManageCredits extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('R\$ 10,00 ',
+              Text('R\$ $cImp,00 ',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500))
             ],
           ),
@@ -49,15 +50,17 @@ class ManageCredits extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text('Créditos de Estacionamento',
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500))
+              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500)),
+              
             ],
           ),
           Divider(height: 25,color: Colors.transparent,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('R\$ 10,00 ',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500))
+              Text('R\$ $cEst,00 ',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500)),
+
             ],
           ),
           Divider(height: 10,color: Colors.transparent,),
@@ -88,22 +91,4 @@ class ManageCredits extends StatelessWidget {
     )
     );
   }
-}
-
-
- dynamic getCreditoEst() async{
-
-  String query = getCreditos(userId,1);
-    var aux = await conn.query(query);
-    print(aux);
-    var aux2 = aux['data'];
-    print(aux2);
-    var aux3 = aux2['cadastro'];
-    print(aux3);
-
-    var c = aux3.map<int>((m) => m['credit_est'] as int).toList();
-    print(c[0]);
-
-    return c[0];
-
 }
