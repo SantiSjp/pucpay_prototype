@@ -164,7 +164,13 @@ try {
   valor = await _getCredito(bEstacionamento,bImpressao);
   print("here: " + valor.toString());
 
+
   c = int.parse(credito);
+
+  if(c<=0){
+    throw new Exception("O valor do crédito não pode ser negativo");
+  }
+
   c += valor;
 
   if(!bEstacionamento && !bImpressao){
