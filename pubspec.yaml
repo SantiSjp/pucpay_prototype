@@ -17,9 +17,11 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  build_runner:
+  json_serializable: ^3.2.2
+  url_launcher: ^5.2.2
   hasura_connect:
-  cloud_firestore:
-  firebase_auth:
+  uuid: ^2.0.2
   flutter:
     sdk: flutter
 

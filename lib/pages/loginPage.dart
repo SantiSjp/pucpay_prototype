@@ -1,29 +1,25 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
+import 'package:pucpay_prototype/global.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _login = TextEditingController();
+  final _pass = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
- 
-  
 
   _showLogo(){
   return Container(
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
   );
 }
-
-final _login = TextEditingController();
-final _pass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +39,7 @@ final _pass = TextEditingController();
             //autofocus: true,
               style: new TextStyle(color: Colors.black, fontSize: 15),
               decoration: InputDecoration(
-              labelText: 'Insira seu usuário'
+              labelText: 'Insira seu email'
             ),
           ),
             Divider(height: 10, color: Colors.white),
@@ -72,9 +68,27 @@ final _pass = TextEditingController();
                 height: 0,
               ),
               RaisedButton(
-                onPressed: () {
+                onPressed: () async {
+                  print("LOGIN");
                   doLogin(context, _login.text, _pass.text,_scaffoldKey);
-                },
+                  /*try{
+                    var r = await conn.mutation(docInsert);
+                    print(r['data']);
+                    var a = (r['data']);
+                    print(a['insert_teste']);
+                    var b = a['insert_teste'];
+                    var c = b.map<int>((m) => m['id'] as int).toList();
+                    var d = b.map<String>((m) => m['name'] as String).toList();
+                    print(c);
+                    print(d);
+                    if(c != []){print("SDSDAS");}
+                    //var b =(a['teste']) as String;
+                    //print(b);
+
+                  }catch(e){
+                    print(e);
+                  }*/
+                  },
                 child: const Text(
                   'LOGIN',
                   style: TextStyle(fontSize: 10)
@@ -85,7 +99,7 @@ final _pass = TextEditingController();
               )
             )
       ]
-      )
+      ),
     ),
     );
   }
@@ -93,32 +107,60 @@ final _pass = TextEditingController();
 
 void doLogin(BuildContext context,login,pass,_key) async{
   try{
-    
+
     print('EMAIL é: $login');
     print('SENHA é: $pass');
-    Firestore.instance.collection('users').document('users').setData({'user': login,'pass':pass});
-    FirebaseUser user = (await FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: login, password: pass)).user;
 
-    if(user != null){
-      Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen(login)),
-       (Route<dynamic> route) => false,
-      );
+    if(login == ""){
+      throw new Exception("Empty_Mail_Error");
+    }
+    if(pass == ""){
+      throw new Exception("Empty_pass_Error");
     }
 
-      print('Signed In: ${user.uid}');
+
+    String userLog = getUserLog(login,pass);
+
+    var verifyLog = await conn.query(userLog).catchError((e){
+      throw new Exception("ERROR");
+    });
+
+    var dataLog = verifyLog['data']['cadastro'];
+
+    print(dataLog);
+
+    var uid = dataLog.map<String>((m) => m['UID'] as String).toList();
+    var nome = dataLog.map<String>((m) => m['nome'] as String).toList();
+    var matricula = dataLog.map<int>((m) => m['matricula'] as int).toList();
+
+    print(uid.isEmpty);
+    print(nome.isEmpty);
+    print(matricula.isEmpty);
+
+
+    if(uid.isEmpty || nome.isEmpty || matricula.isEmpty){
+      throw new Exception("Usuario inválido");
+    }
+
+    userId = uid[0];
+    nomeUser = nome[0];
+    matriculaUser = matricula[0];
+
       _key.currentState.showSnackBar(SnackBar(
         content: Text("Logged In"),
         backgroundColor: Colors.green,
       ));
 
+     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen()),
+            (Route<dynamic> route) => false,);
+
   } catch(e){
-    print("Error: ${e.toString()}");
+    print(e.toString());
+
     _key.currentState.showSnackBar(SnackBar(
-        content: Text("ERRO Verefique seu Login"),
-        backgroundColor: Colors.redAccent,
-      ));
-     //Navigator.pop(context);    
+      content: Text(e.message),
+      backgroundColor: Colors.redAccent,
+    ));  
   }
   FocusScope.of(context).requestFocus(new FocusNode());
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
 import 'signupPage.dart';
+import 'package:pucpay_prototype/global.dart';
 
 class Homepage extends StatelessWidget {
  
@@ -23,7 +24,7 @@ class Homepage extends StatelessWidget {
             Divider(height: 40, color: Colors.transparent),
             botao("Cadastro",context,Signup()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Pagar via scan",context,LoginPage())
+            botao("Pagar via scan",context,LoginPage()),
           ],
         )
       ),

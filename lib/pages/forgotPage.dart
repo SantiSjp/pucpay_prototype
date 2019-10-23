@@ -1,5 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pucpay_prototype/global.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class ForgotPass extends StatefulWidget {
   @override
@@ -39,13 +41,7 @@ class _ForgotPassState extends State<ForgotPass> {
             ),
           ),
             Divider(height: 10, color: Colors.white,),
-            TextFormField(
-             obscureText: false,
-             style: new TextStyle(color: Colors.black, fontSize: 15),
-              decoration: InputDecoration(
-              labelText: 'Insira sua Matrícula'
-               ),
-              ),
+
             Container(
               child: Column(
                 children: <Widget>[
@@ -72,18 +68,16 @@ class _ForgotPassState extends State<ForgotPass> {
 
 void forgot(_login,_key) async{
   try{
-    var user = FirebaseAuth.instance.sendPasswordResetEmail(
-      email: _login
+
     
-    );
     _key.currentState.showSnackBar(SnackBar(
         content: Text("Email enviado"),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.blueAccent,
       ));
   }catch(e){
    print("Error: ${e.toString()}");
    _key.currentState.showSnackBar(SnackBar(
-        content: Text("ERRO Verefique seu Login"),
+        content: Text("ERRO Verifique seu Login"),
         backgroundColor: Colors.redAccent,
       ));
   }
