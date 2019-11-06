@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/manageCredits.dart';
 import 'insertCreditsPage.dart';
+import 'paymentCadPage.dart';
 import 'package:pucpay_prototype/global.dart';
 //import 'loginPage.dart';
 
@@ -70,7 +71,7 @@ _nextScreen(context, Widget route){
             _show()
           ],
         ),
-        Divider(height: 20,color: Colors.white,),
+        Divider(height: 10,color: Colors.white,),
         Text('Menu PUCpay',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         Divider(height: 20,color: Colors.white),
@@ -125,6 +126,19 @@ _nextScreen(context, Widget route){
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
+              Divider(height: 20,color: Colors.white),
+             ButtonTheme(
+               child: SizedBox(
+               width: 270,
+               height:50 ,
+                child: RaisedButton(
+                onPressed: (){
+                  _nextScreen(context, PaymentCad());
+                },
+                child: Text("Cadastrar método de Pagamento",style: TextStyle(color: Colors.white),),
+                //color: Colors.grey,
+                color: Color.fromRGBO(84, 84, 84, 33),
+             ))), 
              Divider(height: 20,color: Colors.white),
              ButtonTheme(
                child: SizedBox(
