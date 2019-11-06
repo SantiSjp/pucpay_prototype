@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pucpay_prototype/global.dart';
+import 'package:pucpay_prototype/pages/menuPage.dart';
 import 'input_formatters.dart';
 import 'payment_card.dart';
 import 'my_strings.dart';
@@ -183,6 +185,7 @@ class _CadCreditState extends State<CadCredit> {
       form.save();
       // Encrypt and send send payment details to payment gateway
       _showInSnackBar('Cartão para pagamento é valido','green');
+      exibirDialogo(context, 'Cartao Validado', 'O cartão foi cadastrado com sucesso!', 'Continuar', MenuScreen());
     }
   }
 

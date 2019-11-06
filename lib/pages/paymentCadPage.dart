@@ -86,8 +86,9 @@ class _PaymentCadState extends State<PaymentCad> {
            Divider(height: 150,color: Colors.transparent,),
           
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              //Padding(padding: const EdgeInsets.only(right:10,),),
+              Padding(padding: const EdgeInsets.only(right:10,),),
               ButtonTheme(
                child: SizedBox(
                width: 130,
