@@ -160,6 +160,7 @@ void doLogin(BuildContext context,login,pass,_key) async{
     _key.currentState.showSnackBar(SnackBar(
       content: Text(e.message),
       backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
     ));  
   }
   FocusScope.of(context).requestFocus(new FocusNode());
