@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart' as prefix0;
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:flutter/material.dart';
-import 'package:pucpay_prototype/pages/loginPage.dart';
 
 String url = 'https://puc-pay.herokuapp.com/v1/graphql';
 String error;
-HasuraConnect conn = HasuraConnect(url);
+HasuraConnect conn = HasuraConnect(url); 
 
 var userId;
 var nomeUser;
