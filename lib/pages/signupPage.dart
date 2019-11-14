@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pucpay_prototype/pages/homePage.dart';
 import 'package:pucpay_prototype/pages/loginPage.dart';
 import 'package:pucpay_prototype/global.dart';
 import 'package:uuid/uuid.dart';

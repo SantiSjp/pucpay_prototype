@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
-import 'insertCreditsPage.dart';
 
 class ManageCredits extends StatelessWidget {
   @override

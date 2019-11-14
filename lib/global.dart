@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart' as prefix0;
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:flutter/material.dart';
-import 'package:pucpay_prototype/pages/loginPage.dart';
 
 String url = 'https://puc-pay.herokuapp.com/v1/graphql';
 String error;
-HasuraConnect conn = HasuraConnect(url);
+HasuraConnect conn = HasuraConnect(url); 
 
 var userId;
 var nomeUser;
@@ -143,6 +141,18 @@ String getUserLog(mail, pass) {
   return getUserLog;
 }
 
+String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
+
+  String _insertCard = """
+  mutation {
+  insert_cards(objects: {UID_PK: "$uid", cvv: "$cvv", nome: "$nome", numero: "$cardNumber", validade: "$validade"}) {
+    affected_rows
+  }
+}
+   """;
+
+   return _insertCard;
+}
 
 void exibirDialogo(context, String title, String content, String button, page){
   showDialog(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'selectPaymentPage.dart';
 
 enum TipoDeCredito {Impressao, Estacionamento}
 int _tipoCredito = 0;
@@ -131,7 +132,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao);
+                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao, context);
                   setState(() {
                    botaoEstacionamento = false;
                    botaoImpressao = false; 
@@ -152,7 +153,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
 
-void insertCredits(credito, _key, bEstacionamento,bImpressao) async{
+void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
   String insert;
   var valor;
@@ -191,6 +192,11 @@ try {
     content: Text("Creditos Inseridos"),
     backgroundColor: Colors.green,
     ));
+
+    Navigator.push(
+    context, 
+    new MaterialPageRoute(builder: (context) => SelectPag()),
+    );
 
    //Navigator.pop(context);   
   }catch (e) {

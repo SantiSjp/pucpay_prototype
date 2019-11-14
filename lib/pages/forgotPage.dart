@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pucpay_prototype/global.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 class ForgotPass extends StatefulWidget {

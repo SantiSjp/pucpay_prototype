@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
@@ -36,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
             _showLogo(),
             TextFormField(
               controller: _login,
+              keyboardType: TextInputType.emailAddress,
             //autofocus: true,
               style: new TextStyle(color: Colors.black, fontSize: 15),
               decoration: InputDecoration(
@@ -160,6 +159,7 @@ void doLogin(BuildContext context,login,pass,_key) async{
     _key.currentState.showSnackBar(SnackBar(
       content: Text(e.message),
       backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
     ));  
   }
   FocusScope.of(context).requestFocus(new FocusNode());
