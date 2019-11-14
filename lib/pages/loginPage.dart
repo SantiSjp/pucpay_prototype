@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
             _showLogo(),
             TextFormField(
               controller: _login,
+              keyboardType: TextInputType.emailAddress,
             //autofocus: true,
               style: new TextStyle(color: Colors.black, fontSize: 15),
               decoration: InputDecoration(

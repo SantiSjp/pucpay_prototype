@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'cadCredit.dart';
+import 'cadCreditPage.dart';
 
 enum TipoDePgto {Paypal, Cartao}
 int _tipoPagto = 0;

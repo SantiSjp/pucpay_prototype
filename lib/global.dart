@@ -141,6 +141,18 @@ String getUserLog(mail, pass) {
   return getUserLog;
 }
 
+String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
+
+  String _insertCard = """
+  mutation {
+  insert_cards(objects: {UID_PK: "$uid", cvv: "$cvv", nome: "$nome", numero: "$cardNumber", validade: "$validade"}) {
+    affected_rows
+  }
+}
+   """;
+
+   return _insertCard;
+}
 
 void exibirDialogo(context, String title, String content, String button, page){
   showDialog(

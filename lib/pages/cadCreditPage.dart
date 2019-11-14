@@ -18,6 +18,9 @@ class _CadCreditState extends State<CadCredit> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _formKey =  GlobalKey<FormState>();
   var numberController =  TextEditingController();
+  var cvvController = TextEditingController();
+  var nomeController = TextEditingController();
+  var valController = TextEditingController();
   var _paymentCard = PaymentCard();
   var _autoValidate = false;
 
@@ -63,6 +66,7 @@ class _CadCreditState extends State<CadCredit> {
                     onSaved: (String value) {
                       _card.name = value;
                     },
+                    controller: nomeController,
                     keyboardType: TextInputType.text,
                     validator: (String value) =>
                         value.isEmpty ? Strings.fieldReq : null,
@@ -111,6 +115,7 @@ class _CadCreditState extends State<CadCredit> {
                       hintText: 'Numero de segurança',
                       labelText: 'CVV',
                     ),
+                    controller: cvvController,
                     validator: CardUtils.validateCVV,
                     keyboardType: TextInputType.number,
                     onSaved: (value) {
@@ -137,6 +142,7 @@ class _CadCreditState extends State<CadCredit> {
                       hintText: 'MM/YY',
                       labelText: 'Data de Expiração',
                     ),
+                    controller: valController,
                     validator: CardUtils.validateDate,
                     keyboardType: TextInputType.number,
                     onSaved: (value) {
@@ -185,6 +191,7 @@ class _CadCreditState extends State<CadCredit> {
       form.save();
       // Encrypt and send send payment details to payment gateway
       _showInSnackBar('Cartão para pagamento é valido','green');
+      _insertCreditCard();
       exibirDialogo(context, 'Cartao Validado', 'O cartão foi cadastrado com sucesso!', 'Continuar', MenuScreen());
     }
   }
@@ -201,7 +208,9 @@ class _CadCreditState extends State<CadCredit> {
       );
     } else {
       return new RaisedButton(
-        onPressed: _validateInputs,
+        onPressed:(){
+          _validateInputs();
+        },
         color: Colors.redAccent,
         splashColor: Colors.deepPurple,
         shape: RoundedRectangleBorder(
@@ -227,6 +236,24 @@ class _CadCreditState extends State<CadCredit> {
       backgroundColor: cor,
       duration: new Duration(seconds: 3),
     ));
+  }
+
+  void _insertCreditCard() async{
+    try{
+      String dataVal = _paymentCard.month.toString() + "/" + _paymentCard.year.toString();
+
+      String docInsert = insertCard(userId, numberController.text, cvvController.text,_card.name, dataVal);
+      var insert = await conn.mutation(docInsert);
+      print(insert);
+    
+    }catch(e){
+      print(e.toString());
+
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(e.message),
+      backgroundColor: Colors.redAccent,
+      ));
+    }
   }
 
 
