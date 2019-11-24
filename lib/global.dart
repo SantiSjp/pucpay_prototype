@@ -154,6 +154,11 @@ String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
    return _insertCard;
 }
 
+String getPagamento() {
+  return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+}
+
+
 void exibirDialogo(context, String title, String content, String button, page){
   showDialog(
     context: context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:pucpay_prototype/global.dart';
 
 class LogInput extends StatelessWidget {
   final List<Map> logList;
@@ -21,7 +22,7 @@ class LogInput extends StatelessWidget {
             children: <Widget>[
               Center(child:Text("VALOR", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
               Divider(height: 6,),
-              Center(child:Text('R\$'+logList[index]['valor'], style: TextStyle(fontSize: 14),)),
+              Center(child:Text('R\$'+logList[index]['valor'].toString(), style: TextStyle(fontSize: 14),)),
             ],
           ),
           // Data
@@ -30,7 +31,7 @@ class LogInput extends StatelessWidget {
             children: <Widget>[
               Center(child:Text("DATA", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
               Divider(height: 6,),
-              Center(child:Text(logList[index]['data'], style: TextStyle(fontSize: 14),)),
+              Center(child:Text(logList[index]['data'].toString(), style: TextStyle(fontSize: 14),)),
             ],
           )
         ],
@@ -60,25 +61,33 @@ class PrintingLog extends StatefulWidget {
 
 class _PrintingLogState extends State<PrintingLog> {
   List<Map> _printLogList;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
-    _printLogList = fetchLogs();
+    _printLogList = new List<Map>();
+    fetchLogs(_scaffoldKey).then((result) {
+      setState(() {
+        _printLogList = result;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.refresh),
-          onPressed: () {
-            setState(() {
-              _printLogList.add({'valor':'3,50', 'data': '24/11/2019'});
-            });
-          },
-        ),
+        // IconButton(
+        //   icon: Icon(Icons.refresh),
+        //   onPressed: () {
+        //     setState(() {
+        //       _printLogList.add({'valor':'3,50', 'data': '24/11/2019'});
+        //     });
+        //   },
+        // ),
         ],
       ),
       body: Column(
@@ -97,11 +106,32 @@ class _PrintingLogState extends State<PrintingLog> {
   }
 }
 
-List<Map> fetchLogs() {
-  List<Map> logList;
-  logList = [
-    {'valor':'10,00', 'data':'22/11/1997'},
-    {'valor':'20,00', 'data': '18/05/1947'}
-  ];
+
+Future<List<Map>> fetchLogs(_scaffoldKey) async {
+  List<Map> logList = new List<Map>();
+  try {
+    
+    String querryPagamento = getPagamento();
+    var pagamentos = await conn.query(querryPagamento).catchError((e){
+      throw new Exception("ERROR while fetching logs");
+      });
+
+    var map = pagamentos['data']['pagamentos'];
+    for(var item in map) {
+      logList.add({'data':item['data'], 'valor':item['valor']});
+    }
+    
+    print(logList);
+
+  } catch(e){
+    print(e.toString());
+
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    content: Text(e.message),
+    backgroundColor: Colors.redAccent,
+    duration: Duration(seconds: 2),
+  )); 
+  }
+
   return logList;
 }
