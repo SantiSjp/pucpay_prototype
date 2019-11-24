@@ -40,7 +40,7 @@ Widget botao(text,context,route){
       child: ButtonTheme(
         child: RaisedButton(
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => route));
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => route));
           },
           child: Text(text, style: TextStyle(color: Colors.white)),
           color: Color.fromRGBO(104, 104, 104, 10),   //Definindo Cor para botão,
