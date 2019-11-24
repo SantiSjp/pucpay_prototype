@@ -178,7 +178,7 @@ _nextScreen(context, Widget route){
 
     try{
 
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#FF0000", "Cancelar", false, ScanMode.BARCODE);
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#FF0000", "Cancelar", false, ScanMode.QR);
 
       print(barcodeScanRes);
 
@@ -189,6 +189,8 @@ _nextScreen(context, Widget route){
     }
 
     // exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
+    
+    exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
     //_nextScreen(context, PaymentCredit());
   }
 
