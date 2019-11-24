@@ -21,6 +21,8 @@ dependencies:
   json_serializable: ^3.2.2
   url_launcher: ^5.2.2
   hasura_connect:
+  barcode_scan: any
+  flutter_barcode_scanner: ^0.1.7
   uuid: ^2.0.2
   flutter:
     sdk: flutter

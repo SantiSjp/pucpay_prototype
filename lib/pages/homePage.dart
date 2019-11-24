@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
 import 'signupPage.dart';
+import 'readBarcodePage.dart';
 
 class Homepage extends StatelessWidget {
  
@@ -9,6 +10,7 @@ class Homepage extends StatelessWidget {
     child: Image.asset("assets/logo_t.png",width: 1000.0 ,height: 250.0,)
   );
   }
+
 
   @override
  
@@ -46,3 +48,4 @@ Widget botao(text,context,route){
        )
    );  
 }
+

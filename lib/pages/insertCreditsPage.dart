@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'package:pucpay_prototype/pages/paymentCreditPage.dart';
 import 'selectPaymentPage.dart';
+import 'paymentCreditPage.dart';
 
 enum TipoDeCredito {Impressao, Estacionamento}
 int _tipoCredito = 0;
@@ -157,60 +159,62 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
   String insert;
   var valor;
-  int c;
+  int newValor;
   print("aqui");
 
-try {
+  try {
 
-  valor = await _getCredito(bEstacionamento,bImpressao);
-  print("here: " + valor.toString());
+    valor = await _getCredito(bEstacionamento,bImpressao);
+    print("here: " + valor.toString());
 
 
-  c = int.parse(credito);
+    newValor = int.parse(credito);
 
-  if(c<=0){
-    throw new Exception("O valor do crédito não pode ser negativo");
-  }
+    if(newValor<=0){
+      throw new Exception("O valor do crédito não pode ser negativo");
+    }
 
-  c += valor;
+    newValor += valor;
 
-  if(!bEstacionamento && !bImpressao){
-    throw new Exception("Selecione um tipo de credito");
-  }
-  
-  if(bEstacionamento){
-    insert = insertCredit(userId, c, 1);
-  }
-  if(bImpressao){
-      insert = insertCredit(userId, c, 2);
-  }
+    if(!bEstacionamento && !bImpressao){
+      throw new Exception("Selecione um tipo de credito");
+    }
+    
+    if(bEstacionamento){
+      insert = insertCredit(userId, newValor, 1);
+      //_nextScreen(context, PaymentCredit());
+    }
+    if(bImpressao){
+        insert = insertCredit(userId, newValor, 2);
+    }
 
-    var aux2 = await conn.mutation(insert);
-    print("insert: " + aux2.toString());
+      var aux2 = await conn.mutation(insert);
+      print("insert: " + aux2.toString());
 
-    _key.currentState.showSnackBar(SnackBar(
-    content: Text("Creditos Inseridos"),
-    backgroundColor: Colors.green,
-    ));
+      _key.currentState.showSnackBar(SnackBar(
+      content: Text("Creditos Inseridos"),
+      backgroundColor: Colors.green,
+      ));
 
-    Navigator.push(
-    context, 
-    new MaterialPageRoute(builder: (context) => SelectPag()),
-    );
+      Navigator.push(
+      context, 
+      new MaterialPageRoute(builder: (context) => SelectPag()),
+      );
 
-   //Navigator.pop(context);   
-  }catch (e) {
-    print(e);
+    //Navigator.pop(context);   
+    }catch (e) {
+      print(e);
 
-     _key.currentState.showSnackBar(SnackBar(
-      content: Text(e.message),
-      backgroundColor: Colors.redAccent,
-    ));
-  }
+      _key.currentState.showSnackBar(SnackBar(
+        content: Text(e.message),
+        backgroundColor: Colors.redAccent,
+      ));
+    }
   
 }
 
 Future<int> _getCredito(bEstacionamento,bImpressao) async{
+
   
   String credEst;
   String credImp;
@@ -255,3 +259,10 @@ Future<int> _getCredito(bEstacionamento,bImpressao) async{
   }
   return value;
 }
+
+_nextScreen(context, Widget route){
+  Navigator.push(
+    context, 
+    new MaterialPageRoute(builder: (context) => route),
+    );
+}  

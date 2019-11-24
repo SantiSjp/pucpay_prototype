@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'package:pucpay_prototype/funcoes.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -150,6 +151,8 @@ void doLogin(BuildContext context,login,pass,_key) async{
         backgroundColor: Colors.green,
       ));
 
+    getCreditUser();
+
      Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen()),
             (Route<dynamic> route) => false,);
 
@@ -164,3 +167,4 @@ void doLogin(BuildContext context,login,pass,_key) async{
   }
   FocusScope.of(context).requestFocus(new FocusNode());
 }
+

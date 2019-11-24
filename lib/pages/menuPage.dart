@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/manageCredits.dart';
+import 'package:pucpay_prototype/pages/paymentCreditPage.dart';
 import 'insertCreditsPage.dart';
 import 'paymentCadPage.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'package:pucpay_prototype/funcoes.dart';
+import 'readBarcodePage.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
-
   _show(){                                //Método Privado para exibir o logo da PucPAY
     return Container(
        alignment : Alignment(7,1),
@@ -81,7 +85,6 @@ _nextScreen(context, Widget route){
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  getData();
                 },
                 child: Text("Visualizar histórico de pagamento",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
@@ -93,9 +96,7 @@ _nextScreen(context, Widget route){
                width: 270,
                height: 50 ,
                 child: RaisedButton(
-                onPressed: () async {
-                  cEst = await retornaEst();
-                  cImp = await retornaImp();
+                onPressed: (){
                   _nextScreen(context, ManageCredits());
                 },
                 child: Text("Visualizar crédito da carteirinha",style: TextStyle(color: Colors.white),),
@@ -121,7 +122,10 @@ _nextScreen(context, Widget route){
                width: 270,
                height:50 ,
                 child: RaisedButton(
-                onPressed: (){},
+                onPressed: (){
+                  barcodeScan(context);
+                  //_nextScreen(context, Barcode());
+                },
                 child: Text("Pagar ticket do estacionamento",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),
@@ -163,64 +167,58 @@ _nextScreen(context, Widget route){
   ),
 );
 }
-}
 
- getData(){
-
-//var a = Firestore.instance.collection('users').where('login',isEqualTo:'santi').snapshots()
-
- 
-}
-
- retornaEst() async{
-
-  int valor = (await valorCreditoEst());
-  print(valor);
-
-  return (int.parse(valor.toString()));
 
 }
 
-retornaImp() async{
+  barcodeScan(context) async{
 
-  int valor2 = await valorCreditoImp();
+    try{
 
-  return (int.parse(valor2.toString()));
-}
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#FF0000", "Cancelar", false, ScanMode.BARCODE);
 
+    print(barcodeScanRes);
 
- Future<int> valorCreditoEst() async{
+    }catch(e){
 
-  String credEst;
+      print(e.toString());
 
-  credEst = getCreditos(userId,1);
+    }
 
-  var aux = await conn.query(credEst);
-  print(aux);
-  var aux2 = aux['data']['cadastro'];
-  print(aux2);
+    exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
+    //_nextScreen(context, PaymentCredit());
+  }
 
-  var c = aux2.map<int>((m) => m['credit_est'] as int).toList();
-  print("eba " + c[0].toString());
-
-  return c[0];
-
-}
-
- Future<int> valorCreditoImp() async{
-
-  String credImp;
-
-  credImp = getCreditos(userId,2);
-
-  var aux = await conn.query(credImp);
-  print(aux);
-  var aux2 = aux['data']['cadastro'];
-  print(aux2);
-
-  var c = aux2.map<int>((m) => m['credit_imp'] as int).toList();
-  print("eba " + c[0].toString());
-
-  return c[0];
-
+void exibirDialogoScan(context, String title, String content, String button1, String button2){
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(button2),
+            onPressed: (){
+              print(button2);
+              Navigator.pop(context);
+              //Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen()),
+              //(Route<dynamic> route) => false,);
+            },
+          ),
+          FlatButton(
+            child: Text(button1),
+            onPressed: (){
+              print(button1);
+              //Navigator.pop(context);
+              Navigator.push(
+              context, 
+              new MaterialPageRoute(builder: (context) => PaymentCredit()),
+              );
+            },
+          )
+        ],
+      );
+    }
+  );
 }
