@@ -3,6 +3,8 @@ import 'package:pucpay_prototype/pages/manageCredits.dart';
 import 'insertCreditsPage.dart';
 import 'paymentCadPage.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'readBarcodePage.dart';
+
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -121,7 +123,9 @@ _nextScreen(context, Widget route){
                width: 270,
                height:50 ,
                 child: RaisedButton(
-                onPressed: (){},
+                onPressed: (){
+                  
+                },
                 child: Text("Pagar ticket do estacionamento",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),
