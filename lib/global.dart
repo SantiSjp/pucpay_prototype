@@ -166,6 +166,10 @@ String getCard(){
 
 return _getCard;
 }
+String getPagamento() {
+  return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+}
+
 
 void exibirDialogo(context, String title, String content, String button, page){
   showDialog(

@@ -8,6 +8,7 @@ import 'package:pucpay_prototype/funcoes.dart';
 import 'readBarcodePage.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
+import 'printingLog.dart';
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -42,8 +43,16 @@ _nextScreen(context, Widget route){
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-        title: Center(child: Text("PUCpay",textAlign: TextAlign.center)
-        ),
+        title: Center(child: Text("PUCpay",textAlign: TextAlign.center)),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              cleanUserData();
+              _navigateToInitialPage(context);
+            },
+            )
+        ],
       ),
   body: Container(
     padding: const EdgeInsets.all(25),
@@ -150,15 +159,9 @@ _nextScreen(context, Widget route){
                height:50 ,
                 child: FlatButton(
                 onPressed: (){
-                  userId = 0;
-                  nomeUser = '';
-                  matriculaUser = 0;
-                  cEst = 0; cImp = 0;
-                  print(userId);
-                  _navigateToInitialPage(context);
+                  _nextScreen(context, PrintingLog());
                 },
-                child: Text("Logout",style: TextStyle(color: Colors.white),),
-                //color: Colors.grey,
+                child: Text("Historico de Impressões",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              )))
               
@@ -221,4 +224,30 @@ void exibirDialogoScan(context, String title, String content, String button1, St
       );
     }
   );
+}
+
+ Future<int> valorCreditoImp() async{
+
+  String credImp;
+
+  credImp = getCreditos(userId,2);
+
+  var aux = await conn.query(credImp);
+  print(aux);
+  var aux2 = aux['data']['cadastro'];
+  print(aux2);
+
+  var c = aux2.map<int>((m) => m['credit_imp'] as int).toList();
+  print("eba " + c[0].toString());
+
+  return c[0];
+
+}
+
+void cleanUserData() async {
+  userId = 0;
+  nomeUser = '';
+  matriculaUser = 0;
+  cEst = 0; 
+  cImp = 0;
 }
