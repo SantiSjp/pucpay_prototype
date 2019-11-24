@@ -25,7 +25,7 @@ class Homepage extends StatelessWidget {
             Divider(height: 40, color: Colors.transparent),
             botao("Cadastro",context,Signup()),
             Divider(height: 40, color: Colors.transparent),
-            botao("Pagar via scan",context,Barcode()),
+            botao("Pagar via scan",context,LoginPage()),
           ],
         )
       ),
@@ -48,3 +48,4 @@ Widget botao(text,context,route){
        )
    );  
 }
+

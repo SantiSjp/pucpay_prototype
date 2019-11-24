@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'package:pucpay_prototype/funcoes.dart';
 
 enum TipoDePgto {Paypal, Cartao}
 int _tipoPagto = 0;
@@ -13,7 +14,7 @@ class PaymentCredit extends StatefulWidget {
 
 class _PaymentCreditState extends State<PaymentCredit> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  int aux = cEst-5;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +89,8 @@ class _PaymentCreditState extends State<PaymentCredit> {
             },
           ),
           Text('Créditos Disponiveis R\$ $cEst,00 '),
-          Divider(height: 150,color: Colors.transparent,),
+          Text('Créditos Após o pagamento R\$ $aux,00 '),
+          Divider(height: 130,color: Colors.transparent,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -114,9 +116,11 @@ class _PaymentCreditState extends State<PaymentCredit> {
                 onPressed: (){
                   setState(() {
                     if(botaoCreditApp){
-                      verificaCredito(_scaffoldKey,botaoCreditApp);
+                      verificaCredito(context,_scaffoldKey,botaoCreditApp);
                     } 
-
+                    if(botaoCreditCard){
+                      verificaCartao(context,_scaffoldKey);
+                    }
                    botaoCreditApp = false;
                    botaoCreditCard = false; 
                   });
@@ -134,13 +138,27 @@ class _PaymentCreditState extends State<PaymentCredit> {
 }
 
 
-void verificaCredito(_key,bool cApp){
-
+void verificaCredito(context,_key,bool cApp) async{
   try{
+
+    int newValor;
+    String insert;
 
     if(cEst < 5){
       throw new Exception("Créditos insuficientes");
     }
+
+    newValor = cEst-5;
+
+    insert = insertCredit(userId, newValor, 1);
+
+    var updateCredit = await conn.mutation(insert);
+
+    print(updateCredit);
+
+    getCreditUser();
+
+    exibirDialogo(context, "Concluido", "Estacionamento pago e validado com sucesso!", "Continuar", MenuScreen());
 
 
   }catch(e){
@@ -151,6 +169,45 @@ void verificaCredito(_key,bool cApp){
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),
     ));
+
+  }
+
+}
+
+void verificaCartao(context,_key) async{
+
+  try{  
+    String query = getCard();
+
+    var card =await conn.query(query);
+    var cardId = card['data']['cards'][0];
+    print(cardId);
+
+    String title = "Pago com sucesso!";
+    String content = "Estacionamento pago e validado com sucesso";
+    exibirDialogo(context, title, content, "Ok", MenuScreen());
+
+  }catch(e){
+    print(e.toString());
+
+    if (e.message == "Invalid value"){
+
+      _key.currentState.showSnackBar(SnackBar(
+      content: Text("Usuário nao possui cartão"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+      ));  
+      String title  = "Cartão não encontrado";
+      String content = "Você não possui nenhum cartão cadastrado, por favor cadastre no menu inicial";
+      exibirDialogo(context,title, content, "Ok", MenuScreen());
+
+    }else{
+      _key.currentState.showSnackBar(SnackBar(
+      content: Text(e.message),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+      )); 
+    }
 
   }
 

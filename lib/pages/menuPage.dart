@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/pages/manageCredits.dart';
+import 'package:pucpay_prototype/pages/paymentCreditPage.dart';
 import 'insertCreditsPage.dart';
 import 'paymentCadPage.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'package:pucpay_prototype/funcoes.dart';
 import 'readBarcodePage.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
-
   _show(){                                //Método Privado para exibir o logo da PucPAY
     return Container(
        alignment : Alignment(7,1),
@@ -121,7 +123,8 @@ _nextScreen(context, Widget route){
                height:50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  _nextScreen(context, Barcode());
+                  barcodeScan(context);
+                  //_nextScreen(context, Barcode());
                 },
                 child: Text("Pagar ticket do estacionamento",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
@@ -164,4 +167,58 @@ _nextScreen(context, Widget route){
   ),
 );
 }
+
+
+}
+
+  barcodeScan(context) async{
+
+    try{
+
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#FF0000", "Cancelar", false, ScanMode.BARCODE);
+
+    print(barcodeScanRes);
+
+    }catch(e){
+
+      print(e.toString());
+
+    }
+
+    exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
+    //_nextScreen(context, PaymentCredit());
+  }
+
+void exibirDialogoScan(context, String title, String content, String button1, String button2){
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(button2),
+            onPressed: (){
+              print(button2);
+              Navigator.pop(context);
+              //Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => MenuScreen()),
+              //(Route<dynamic> route) => false,);
+            },
+          ),
+          FlatButton(
+            child: Text(button1),
+            onPressed: (){
+              print(button1);
+              //Navigator.pop(context);
+              Navigator.push(
+              context, 
+              new MaterialPageRoute(builder: (context) => PaymentCredit()),
+              );
+            },
+          )
+        ],
+      );
+    }
+  );
 }

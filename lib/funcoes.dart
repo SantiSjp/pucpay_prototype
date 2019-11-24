@@ -1,4 +1,5 @@
 import 'package:pucpay_prototype/global.dart';
+import 'package:flutter/material.dart';
 
 getCreditUser() async{
   cEst = await retornaEst();
@@ -42,6 +43,7 @@ retornaImp() async{
 
  Future<int> valorCreditoImp() async{
 
+
   String credImp;
 
   credImp = getCreditos(userId,2);
@@ -56,4 +58,11 @@ retornaImp() async{
 
   return c[0];
 
+}
+
+
+void retornaTela(context,page){
+  
+   Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => page),
+              (Route<dynamic> route) => false,);
 }

@@ -154,6 +154,19 @@ String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
    return _insertCard;
 }
 
+String getCard(){
+
+  String _getCard = """
+  query {
+  cards(where: {UID_PK: {_eq: "$userId"}}) {
+    id
+  }
+}
+""";
+
+return _getCard;
+}
+
 void exibirDialogo(context, String title, String content, String button, page){
   showDialog(
     context: context,
