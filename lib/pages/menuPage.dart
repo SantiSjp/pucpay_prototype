@@ -3,6 +3,7 @@ import 'package:pucpay_prototype/pages/manageCredits.dart';
 import 'insertCreditsPage.dart';
 import 'paymentCadPage.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'printingLog.dart';
 //import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -38,8 +39,16 @@ _nextScreen(context, Widget route){
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-        title: Center(child: Text("PUCpay",textAlign: TextAlign.center)
-        ),
+        title: Center(child: Text("PUCpay",textAlign: TextAlign.center)),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              cleanUserData();
+              _navigateToInitialPage(context);
+            },
+            )
+        ],
       ),
   body: Container(
     padding: const EdgeInsets.all(25),
@@ -146,15 +155,9 @@ _nextScreen(context, Widget route){
                height:50 ,
                 child: FlatButton(
                 onPressed: (){
-                  userId = 0;
-                  nomeUser = '';
-                  matriculaUser = 0;
-                  cEst = 0; cImp = 0;
-                  print(userId);
-                  _navigateToInitialPage(context);
+                  _nextScreen(context, PrintingLog());
                 },
-                child: Text("Logout",style: TextStyle(color: Colors.white),),
-                //color: Colors.grey,
+                child: Text("Historico de Impressões",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              )))
               
@@ -223,4 +226,12 @@ retornaImp() async{
 
   return c[0];
 
+}
+
+void cleanUserData() async {
+  userId = 0;
+  nomeUser = '';
+  matriculaUser = 0;
+  cEst = 0; 
+  cImp = 0;
 }

@@ -22,7 +22,6 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Center(child: Text("PucPay",textAlign: TextAlign.center))
       ),
       body: Container(
         padding: EdgeInsets.all(20),
