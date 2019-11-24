@@ -1,7 +1,5 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\src\flutter"
-export "FLUTTER_APPLICATION_PATH=G:\Santi\Desktop\GitLab Projects\pucpay_prototype"
 export "FLUTTER_ROOT=C:\Program Files\flutter"
 export "FLUTTER_APPLICATION_PATH=C:\Repos\pucpay\pucpay_prototype"
 export "FLUTTER_TARGET=lib\main.dart"
