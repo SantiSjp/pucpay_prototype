@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';  
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'paymentCreditPage.dart';
+import 'package:pucpay_prototype/global.dart';
 
 
 class Barcode extends StatefulWidget {
@@ -25,6 +27,7 @@ Future scanCode() async {
        setState(() => this.barcode = 'Unknown error: $e');  
      }  
    }  
+   print(barcode);
  }
 
   @override
@@ -50,11 +53,6 @@ Future scanCode() async {
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
-               FloatingActionButton(  
-                onPressed: scanCode,  
-                tooltip: 'Scan',  
-                child: Icon(Icons.scanner),  
-              ),  
           ],
         ),
       ),
@@ -66,14 +64,17 @@ Future scanCode() async {
 
     try{
 
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#9400D3", "CANCEL", false, ScanMode.QR);
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#FF0000", "Cancelar", false, ScanMode.BARCODE);
 
     print(barcodeScanRes);
 
     }catch(e){
-      print(e.toString());
-    }
-  }
 
+      print(e.toString());
+
+    }
+
+    nextScreen(context, PaymentCredit());
+  }
 
 }

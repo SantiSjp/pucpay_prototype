@@ -177,4 +177,9 @@ void exibirDialogo(context, String title, String content, String button, page){
   );
 }
   
- 
+void nextScreen(context, Widget route){
+  Navigator.push(
+    context, 
+    new MaterialPageRoute(builder: (context) => route),
+    );
+}
