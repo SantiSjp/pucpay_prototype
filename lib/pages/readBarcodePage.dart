@@ -29,7 +29,7 @@ Future scanCode() async {
    }  
    print(barcode);
  }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
