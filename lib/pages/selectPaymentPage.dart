@@ -4,10 +4,9 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pucpay_prototype/global.dart';
 import 'menuPage.dart';
-import 'package:intl/intl.dart';
 
 
-enum TipoDePgto {Paypal, Cartao}
+enum TipoDePgto {Boleto, Cartao}
 int _tipoPagto = 0;
 bool botaoCredito = false;
 bool botaoBoleto = false;
@@ -88,7 +87,7 @@ class _SelectPag extends State<SelectPag> {
             activeColor: Color.fromARGB(255, 255, 0, 0),
             onChanged: (value) {
               setState((){
-                _tipoPagto = TipoDePgto.Paypal.index;
+                _tipoPagto = TipoDePgto.Boleto.index;
                 botaoBoleto = value;
                 botaoCredito = false;
                 });
@@ -195,8 +194,8 @@ void boleto(context, valor)async{
   print(decode['boletos'][0]['paymentLink']);
 
   String linkBoleto = decode['boletos'][0]['paymentLink'];
-  //Navigator.pop(context);
-  //Navigator.pop(context);
+  Navigator.pop(context);
+  Navigator.pop(context);
   launch(linkBoleto);
 
   }catch(e){

@@ -212,11 +212,3 @@ void verificaCartao(context,_key) async{
   }
 
 }
-
-
-void _nextScreen(context, Widget route){
-  Navigator.push(
-    context, 
-    new MaterialPageRoute(builder: (context) => route),
-    );
-}

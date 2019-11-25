@@ -3,6 +3,7 @@ import 'package:pucpay_prototype/pages/forgotPage.dart';
 import 'package:pucpay_prototype/pages/menuPage.dart';
 import 'package:pucpay_prototype/global.dart';
 import 'package:pucpay_prototype/funcoes.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final _login = TextEditingController();
   final _pass = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isLoading = false;
 
   _showLogo(){
   return Container(
@@ -30,7 +32,21 @@ class _LoginPageState extends State<LoginPage> {
           left: 30,
           right: 30
         ),
-      child: ListView(                      
+      child: isLoading ? 
+      Column( 
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+         Divider(height: 10,color: Colors.transparent,),
+          Text("Logando...")
+        ],
+      ) 
+      : ListView(                      
           children: <Widget>[
             _showLogo(),
             TextFormField(
@@ -68,26 +84,12 @@ class _LoginPageState extends State<LoginPage> {
                 height: 0,
               ),
               RaisedButton(
-                onPressed: () async {
+                onPressed: (){
+                  setState(() {
+                    isLoading = true;
+                  });
                   print("LOGIN");
                   doLogin(context, _login.text, _pass.text,_scaffoldKey);
-                  /*try{
-                    var r = await conn.mutation(docInsert);
-                    print(r['data']);
-                    var a = (r['data']);
-                    print(a['insert_teste']);
-                    var b = a['insert_teste'];
-                    var c = b.map<int>((m) => m['id'] as int).toList();
-                    var d = b.map<String>((m) => m['name'] as String).toList();
-                    print(c);
-                    print(d);
-                    if(c != []){print("SDSDAS");}
-                    //var b =(a['teste']) as String;
-                    //print(b);
-
-                  }catch(e){
-                    print(e);
-                  }*/
                   },
                 child: const Text(
                   'LOGIN',
@@ -164,6 +166,9 @@ void doLogin(BuildContext context,login,pass,_key) async{
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),
     ));  
+
+    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => LoginPage()),
+            (Route<dynamic> route) => false,);
   }
   FocusScope.of(context).requestFocus(new FocusNode());
 }
