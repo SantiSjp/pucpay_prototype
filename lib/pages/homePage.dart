@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
 import 'signupPage.dart';
-import 'readBarcodePage.dart';
 
 class Homepage extends StatelessWidget {
  

@@ -1,5 +1,6 @@
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 String url = 'https://puc-pay.herokuapp.com/v1/graphql';
 String error;
@@ -202,3 +203,4 @@ void nextScreen(context, Widget route){
     new MaterialPageRoute(builder: (context) => route),
     );
 }
+

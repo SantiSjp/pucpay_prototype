@@ -4,12 +4,8 @@ import 'package:pucpay_prototype/pages/paymentCreditPage.dart';
 import 'insertCreditsPage.dart';
 import 'paymentCadPage.dart';
 import 'package:pucpay_prototype/global.dart';
-import 'package:pucpay_prototype/funcoes.dart';
-import 'readBarcodePage.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 import 'printingLog.dart';
-//import 'loginPage.dart';
 
 class MenuScreen extends StatelessWidget {
   _show(){                                //Método Privado para exibir o logo da PucPAY
@@ -129,17 +125,12 @@ _nextScreen(context, Widget route){
                width: 270,
                height:50 ,
                 child: RaisedButton(
-<<<<<<< HEAD
                 onPressed: (){
                   barcodeScan(context);
                   //_nextScreen(context, Barcode());
                 },
                 child: Text("Pagar ticket do estacionamento",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
-=======
-                onPressed: (){},
-                child: Text("Pagar Estacionamento",style: TextStyle(color: Colors.white),),
->>>>>>> 14-gerenciar-historico-de-impressoes
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
               Divider(height: 20,color: Colors.white),
@@ -184,16 +175,16 @@ _nextScreen(context, Widget route){
 
       print(barcodeScanRes);
 
+    if(barcodeScanRes != "-1"){
+    exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
+    }
+
     }catch(e){
 
       print(e.toString());
 
     }
 
-    // exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
-    
-    exibirDialogoScan(context, "Ticket escaneado", "Prosseguir para pagamento?", "Sim","Não");
-    //_nextScreen(context, PaymentCredit());
   }
 
 void exibirDialogoScan(context, String title, String content, String button1, String button2){
@@ -248,7 +239,7 @@ void exibirDialogoScan(context, String title, String content, String button1, St
 
 }
 
-void cleanUserData() async {
+void cleanUserData(){
   userId = 0;
   nomeUser = '';
   matriculaUser = 0;
