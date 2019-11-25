@@ -155,7 +155,8 @@ String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
 }
 
 String getPagamento() {
-  return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+  // return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+  return """ { pagamentos(where: {UID_PK: {_eq: "$userId"}}, order_by: {data: desc}) { data valor tipo } } """;
 }
 
 
