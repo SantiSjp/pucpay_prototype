@@ -80,10 +80,10 @@ _nextScreen(context, Widget route){
             _show()
           ],
         ),
-        Divider(height: 40,color: Colors.white,),
+        Divider(height: 30,color: Colors.white,),
         Text('Menu PUCpay',
-        style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-          Divider(height: 60,color: Colors.white),
+        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+          Divider(height: 30,color: Colors.white),
           ButtonTheme(
                child: SizedBox(
                width: 270,

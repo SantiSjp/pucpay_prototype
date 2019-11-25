@@ -69,7 +69,7 @@ void retornaTela(context,page){
               (Route<dynamic> route) => false,);
 }
 
-void criaLoading(context,bool desativa){
+criaLoading(context,bool desativa){
   ProgressDialog pr;
   pr = new ProgressDialog(context);
   
@@ -79,6 +79,8 @@ void criaLoading(context,bool desativa){
   if (desativa){
     pr.hide();
   }
+
+  return pr;
 }
 
 void style(pr){

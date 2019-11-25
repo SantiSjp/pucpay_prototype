@@ -132,8 +132,8 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  criaLoading(context, false);
-                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao, context);
+                  var pr = criaLoading(context, false);
+                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao, context, pr);
                   setState(() {
                    botaoEstacionamento = false;
                    botaoImpressao = false; 
@@ -154,7 +154,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
 
-void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
+void insertCredits(credito, _key, bEstacionamento,bImpressao, context, pr) async{
 
   String insert;
   var valor;
@@ -198,7 +198,8 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
       backgroundColor: Colors.green,
       ));
 
-
+      pr.hide();
+      
       Navigator.push(
       context, 
       new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
