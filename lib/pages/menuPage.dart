@@ -83,18 +83,6 @@ _nextScreen(context, Widget route){
         Divider(height: 40,color: Colors.white,),
         Text('Menu PUCpay',
         style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-        Divider(height: 20,color: Colors.white),
-         ButtonTheme(
-               child: SizedBox(
-               width: 270,
-               height: 50 ,
-                child: RaisedButton(
-                onPressed: (){
-                },
-                child: Text("Visualizar histórico de pagamento",style: TextStyle(color: Colors.white),),
-                //color: Colors.grey,
-                color: Color.fromRGBO(84, 84, 84, 33),
-             ))),
           Divider(height: 60,color: Colors.white),
           ButtonTheme(
                child: SizedBox(
