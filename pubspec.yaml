@@ -20,6 +20,7 @@ dependencies:
   build_runner:
   json_serializable: ^3.2.2
   url_launcher: ^5.2.2
+  date_format:
   hasura_connect:
   barcode_scan: any
   flutter_barcode_scanner: ^0.1.7

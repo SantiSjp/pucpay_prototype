@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'package:date_format/date_format.dart';
 
 class LogInput extends StatelessWidget {
   final List<Map> logList;
@@ -14,7 +15,7 @@ class LogInput extends StatelessWidget {
           // Logo
           Container(
             padding: EdgeInsets.all(5),
-            child: Icon(Icons.print, size: 50,),
+            child: Icon(logList[index]['tipo'] == 1 ? Icons.print : Icons.directions_car, size: 50,),
           ),
           // Valor
           Column(
@@ -78,23 +79,12 @@ class _PrintingLogState extends State<PrintingLog> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        actions: <Widget>[
-        // IconButton(
-        //   icon: Icon(Icons.refresh),
-        //   onPressed: () {
-        //     setState(() {
-        //       _printLogList.add({'valor':'3,50', 'data': '24/11/2019'});
-        //     });
-        //   },
-        // ),
-        ],
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           Divider(height: 40,color: Colors.transparent),
           Center(child: Text(
-            'Histórico de Impressões',
+            'Histórico de Pagamentos',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
             )),
           Divider(height: 40,color: Colors.transparent),
@@ -111,14 +101,15 @@ Future<List<Map>> fetchLogs(_scaffoldKey) async {
   List<Map> logList = new List<Map>();
   try {
     
-    String querryPagamento = getPagamento();
-    var pagamentos = await conn.query(querryPagamento).catchError((e){
+    String queryPagamento = getPagamento();
+    var pagamentos = await conn.query(queryPagamento).catchError((e){
       throw new Exception("ERROR while fetching logs");
       });
 
     var map = pagamentos['data']['pagamentos'];
     for(var item in map) {
-      logList.add({'data':item['data'], 'valor':item['valor']});
+      var date = DateTime.parse(item['data'].toString());
+      logList.add({'data':formatDate(date,[dd,'/',mm,'/',yyyy]), 'valor':item['valor'], 'tipo':item['tipo']});
     }
     
     print(logList);

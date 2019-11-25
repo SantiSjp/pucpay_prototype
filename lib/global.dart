@@ -169,7 +169,8 @@ return _getCard;
 
 
 String getPagamento() {
-  return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+  // return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+  return """ { pagamentos(where: {UID_PK: {_eq: "$userId"}}, order_by: {data: desc}) { data valor tipo } } """;
 }
 
 void exibirDialogo(context, String title, String content, String button, page){

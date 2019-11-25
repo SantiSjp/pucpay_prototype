@@ -59,7 +59,7 @@ _nextScreen(context, Widget route){
     child: Column(
       children: <Widget>[
         Row(
-          //crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -84,9 +84,9 @@ _nextScreen(context, Widget route){
             _show()
           ],
         ),
-        Divider(height: 10,color: Colors.white,),
+        Divider(height: 40,color: Colors.white,),
         Text('Menu PUCpay',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
         Divider(height: 20,color: Colors.white),
          ButtonTheme(
                child: SizedBox(
@@ -99,7 +99,7 @@ _nextScreen(context, Widget route){
                 //color: Colors.grey,
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
-             Divider(height: 20,color: Colors.white),
+          Divider(height: 60,color: Colors.white),
           ButtonTheme(
                child: SizedBox(
                width: 270,
@@ -108,8 +108,7 @@ _nextScreen(context, Widget route){
                 onPressed: (){
                   _nextScreen(context, ManageCredits());
                 },
-                child: Text("Visualizar crédito da carteirinha",style: TextStyle(color: Colors.white),),
-                //color: Colors.grey,
+                child: Text("Créditos da Carteirinha",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
               Divider(height: 20,color: Colors.white),
@@ -121,8 +120,7 @@ _nextScreen(context, Widget route){
                 onPressed: (){
                   _nextScreen(context, InsertCredits());
                 },
-                child: Text("Inserir créditos na carteirinha",style: TextStyle(color: Colors.white),),
-                //color: Colors.grey,
+                child: Text("Inserir Créditos",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
               Divider(height: 20,color: Colors.white),
@@ -131,12 +129,17 @@ _nextScreen(context, Widget route){
                width: 270,
                height:50 ,
                 child: RaisedButton(
+<<<<<<< HEAD
                 onPressed: (){
                   barcodeScan(context);
                   //_nextScreen(context, Barcode());
                 },
                 child: Text("Pagar ticket do estacionamento",style: TextStyle(color: Colors.white),),
                 //color: Colors.grey,
+=======
+                onPressed: (){},
+                child: Text("Pagar Estacionamento",style: TextStyle(color: Colors.white),),
+>>>>>>> 14-gerenciar-historico-de-impressoes
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
               Divider(height: 20,color: Colors.white),
@@ -148,8 +151,7 @@ _nextScreen(context, Widget route){
                 onPressed: (){
                   _nextScreen(context, PaymentCad());
                 },
-                child: Text("Cadastrar método de Pagamento",style: TextStyle(color: Colors.white),),
-                //color: Colors.grey,
+                child: Text("Novo Método de Pagamento",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))), 
              Divider(height: 20,color: Colors.white),
@@ -161,7 +163,7 @@ _nextScreen(context, Widget route){
                 onPressed: (){
                   _nextScreen(context, PrintingLog());
                 },
-                child: Text("Historico de Impressões",style: TextStyle(color: Colors.white),),
+                child: Text("Historico de Pagamentos",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              )))
               
