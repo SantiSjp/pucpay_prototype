@@ -159,6 +159,7 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
   String insert;
   var valor;
   int newValor;
+  int valorBoleto;
   print("aqui");
 
   try {
@@ -168,6 +169,8 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
 
     newValor = int.parse(credito);
+    valorBoleto = int.parse(credito);
+
 
     if(newValor<=0){
       throw new Exception("O valor do crédito não pode ser negativo");
@@ -197,7 +200,7 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
       Navigator.push(
       context, 
-      new MaterialPageRoute(builder: (context) => SelectPag()),
+      new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
       );
 
     //Navigator.pop(context);   

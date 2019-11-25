@@ -22,7 +22,7 @@ class LogInput extends StatelessWidget {
             children: <Widget>[
               Center(child:Text("VALOR", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
               Divider(height: 6,),
-              Center(child:Text('R\$'+logList[index]['valor'].toString(), style: TextStyle(fontSize: 14),)),
+              Center(child:Text('R\$'+logList[index]['valor'].toString()+",00", style: TextStyle(fontSize: 14),)),
             ],
           ),
           // Data
