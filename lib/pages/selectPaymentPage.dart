@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pucpay_prototype/global.dart';
 import 'menuPage.dart';
+import 'testPage.dart';
 
 
 enum TipoDePgto {Boleto, Cartao}
@@ -196,7 +197,9 @@ void boleto(context, valor)async{
   String linkBoleto = decode['boletos'][0]['paymentLink'];
   Navigator.pop(context);
   Navigator.pop(context);
-  launch(linkBoleto);
+  //launch(linkBoleto);
+  Navigator.push(context, new MaterialPageRoute(builder: (context) => TestPage(linkBoleto)),
+      );
 
   }catch(e){
     print(e.toString());

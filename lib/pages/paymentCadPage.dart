@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'cadCreditPage.dart';
+import 'testPage.dart';
 
 enum TipoDePgto {Paypal, Cartao}
 int _tipoPagto = 0;
@@ -111,6 +112,12 @@ class _PaymentCadState extends State<PaymentCad> {
                   setState(() {
                     if(botaoCredito){
                       _nextScreen(context, CadCredit());
+                    }
+
+                    if(botaoPaypal){
+                      String url = "https://www.paypal.com/br/signin";
+                      Navigator.push(context, new MaterialPageRoute(builder: (context) => TestPage(url)),
+      );
                     }
 
                    botaoCredito = false;

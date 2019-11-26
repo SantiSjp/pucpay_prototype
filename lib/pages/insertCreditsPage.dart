@@ -132,8 +132,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  var pr = criaLoading(context, false);
-                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao, context, pr);
+                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao, context);
                   setState(() {
                    botaoEstacionamento = false;
                    botaoImpressao = false; 
@@ -154,34 +153,37 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
 
-void insertCredits(credito, _key, bEstacionamento,bImpressao, context, pr) async{
+void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
   String insert;
   var valor;
   int newValor;
   int valorBoleto;
-  print("aqui");
 
   try {
 
+    if(!botaoEstacionamento && !botaoImpressao){
+      throw new Exception("Escolha um tipo de crédito!");
+    }
+
+    if(credito == ''){
+      throw new Exception("Credito não pode ser nulo!");
+    }
+
+    //var pr = criaLoading(context, false);
     valor = await _getCredito(bEstacionamento,bImpressao);
     print("here: " + valor.toString());
 
 
     newValor = int.parse(credito);
     valorBoleto = int.parse(credito);
-
-
-    if(newValor<=0){
-      throw new Exception("O valor do crédito não pode ser negativo");
-    }
-
-    newValor += valor;
-
-    if(!bEstacionamento && !bImpressao){
-      throw new Exception("Selecione um tipo de credito");
-    }
     
+    if(newValor <= 0){
+      throw new Exception("Valor não pode ser 0 ou negativo!");
+    }
+
+    newValor += valor;    
+
     if(bEstacionamento){
       insert = insertCredit(userId, newValor, 1);
       //_nextScreen(context, PaymentCredit());
@@ -193,19 +195,10 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context, pr) async
       var aux2 = await conn.mutation(insert);
       print("insert: " + aux2.toString());
 
-      _key.currentState.showSnackBar(SnackBar(
-      content: Text("Creditos Inseridos"),
-      backgroundColor: Colors.green,
-      ));
-
-      pr.hide();
-      
-      Navigator.push(
-      context, 
-      new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
       );
 
-     
+      //pr.hide();
 
     //Navigator.pop(context);   
     }catch (e) {
@@ -214,9 +207,9 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context, pr) async
       _key.currentState.showSnackBar(SnackBar(
         content: Text(e.message),
         backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 2)
       ));
     }
-  
 }
 
 Future<int> _getCredito(bEstacionamento,bImpressao) async{

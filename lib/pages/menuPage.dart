@@ -92,7 +92,7 @@ _nextScreen(context, Widget route){
                 onPressed: (){
                   _nextScreen(context, ManageCredits());
                 },
-                child: Text("Créditos da Carteirinha",style: TextStyle(color: Colors.white),),
+                child: Text("Saldo de Créditos",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              ))),
               Divider(height: 20,color: Colors.white),
@@ -142,7 +142,7 @@ _nextScreen(context, Widget route){
                 onPressed: (){
                   _nextScreen(context, PrintingLog());
                 },
-                child: Text("Historico de Pagamentos",style: TextStyle(color: Colors.white),),
+                child: Text("Historico de Transações",style: TextStyle(color: Colors.white),),
                 color: Color.fromRGBO(84, 84, 84, 33),
              )))
               
