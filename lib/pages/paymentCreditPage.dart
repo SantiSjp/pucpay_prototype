@@ -219,7 +219,7 @@ void verificaCartao(context,_key) async{
 void inserePagamento() async{
 
   var now = new DateTime.now();
-  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString(); 
+  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString() + "T" + now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString(); 
 
   String insere = insertPagamento(5, 2, data);
   print(insere);
