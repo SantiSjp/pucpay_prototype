@@ -15,7 +15,8 @@ class LogInput extends StatelessWidget {
           // Logo
           Container(
             padding: EdgeInsets.all(5),
-            child: Icon(logList[index]['tipo'] == 1 ? Icons.print : Icons.directions_car, size: 50,),
+            child: Icon(
+              logList[index]['tipo'] == 1 ? Icons.print : logList[index]['tipo'] == 2 ? Icons.directions_car : Icons.monetization_on, size: 50,),
           ),
           // Valor
           Column(
@@ -23,7 +24,7 @@ class LogInput extends StatelessWidget {
             children: <Widget>[
               Center(child:Text("VALOR", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
               Divider(height: 6,),
-              Center(child:Text('R\$'+logList[index]['valor'].toString(), style: TextStyle(fontSize: 14),)),
+              Center(child:Text('R\$'+logList[index]['valor'].toString(), style: TextStyle(fontSize: 14, color: logList[index]['tipo'] == 3 ? Colors.green : Colors.red),)),
             ],
           ),
           // Data
@@ -84,7 +85,7 @@ class _PrintingLogState extends State<PrintingLog> {
         children: [
           Divider(height: 40,color: Colors.transparent),
           Center(child: Text(
-            'Histórico de Pagamentos',
+            'Histórico de Transações',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
             )),
           Divider(height: 40,color: Colors.transparent),
