@@ -195,6 +195,8 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
       var aux2 = await conn.mutation(insert);
       print("insert: " + aux2.toString());
 
+      inserePagamento(valorBoleto);
+
       Navigator.push(context, new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
       );
 
@@ -257,4 +259,17 @@ Future<int> _getCredito(bEstacionamento,bImpressao) async{
 
   }
   return value;
+}
+
+void inserePagamento(valor) async{
+
+  var now = new DateTime.now();
+  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString(); 
+
+  String insere = insertPagamento(valor, 3, data);
+  print(insere);
+
+  var mutation = await conn.mutation(insere);
+  print(mutation);
+
 }
