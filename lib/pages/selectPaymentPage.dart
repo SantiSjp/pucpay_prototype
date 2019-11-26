@@ -126,7 +126,7 @@ class _SelectPag extends State<SelectPag> {
 
                     if(botaoBoleto){
                       var cred = widget.valor;
-                      boleto(context,cred);
+                      boleto(context,cred,_scaffoldKey);
                     }
                     
                    botaoCredito = false;
@@ -145,13 +145,17 @@ class _SelectPag extends State<SelectPag> {
   }
 }
 
-void boleto(context, valor)async{
+void boleto(context, valor, _key)async{
 
   try{
 
   var now = new DateTime.now();
   var a = now.add(new Duration(days:4));
   var data = a.year.toString() + "-" + a.month.toString() + "-" + a.day.toString(); 
+
+
+  getEmail(_key);
+  print(userMail);
 
   var body = jsonEncode({"periodicity":"monthly",
    "reference":"Pedido insercao de creditos",
@@ -165,7 +169,7 @@ void boleto(context, valor)async{
          "value":"21040572057"
       },
       "name":"$nomeUser .",
-      "email":"conato@ontato.com.br",
+      "email":"$userMail",
       "phone":{  
          "areaCode":"41",
          "number":"32711555"
@@ -187,6 +191,7 @@ void boleto(context, valor)async{
   'Content-type': 'application/json;charset=ISO-8859-1',
   'Accept': 'application/json;charset=ISO-8859-1'
   });
+  
 
   var aux = response.body;
   print(jsonDecode(aux));
@@ -243,5 +248,35 @@ void verificaCartao(context,_key) async{
     }
 
   }
+
+}
+
+void getEmail(_key) async{
+
+  String queryMail = getMail();
+
+  try{
+
+    var mail = await conn.query(queryMail);
+    print(mail);
+
+    var aux = mail['data']['cadastro'][0]['email'];
+
+    print(aux);
+
+    userMail = aux;
+
+  }catch(e){
+    print(e.toString());
+
+    _key.currentState.showSnackBar(SnackBar(
+      content: Text(e.message),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+      )); 
+
+  }
+
+
 
 }

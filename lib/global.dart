@@ -6,6 +6,7 @@ String url = 'https://puc-pay.herokuapp.com/v1/graphql';
 String error;
 HasuraConnect conn = HasuraConnect(url); 
 
+var userMail;
 var userId;
 var nomeUser;
 var matriculaUser;
@@ -185,6 +186,20 @@ return _getCard;
 String getPagamento() {
   // return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
   return """ { pagamentos(where: {UID_PK: {_eq: "$userId"}}, order_by: {data: desc}) { data valor tipo } } """;
+}
+
+String getMail(){
+
+  String _getmail = """
+  query {
+  cadastro(where: {UID: {_eq: "$userId"}}) {
+    email
+  }
+}
+""";
+
+return _getmail;
+
 }
 
 void exibirDialogo(context, String title, String content, String button, page){

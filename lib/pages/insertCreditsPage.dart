@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
 import 'selectPaymentPage.dart';
 import 'package:pucpay_prototype/funcoes.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 enum TipoDeCredito {Impressao, Estacionamento}
 int _tipoCredito = 0;
@@ -155,6 +156,12 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 
 void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
+  ProgressDialog pr;
+  pr = new ProgressDialog(context);
+  
+  style(pr);
+  pr.show();
+
   String insert;
   var valor;
   int newValor;
@@ -197,10 +204,11 @@ void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
       inserePagamento(valorBoleto);
 
+      pr.hide();
+
       Navigator.push(context, new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
       );
 
-      //pr.hide();
 
     //Navigator.pop(context);   
     }catch (e) {

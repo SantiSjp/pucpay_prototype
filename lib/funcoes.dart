@@ -69,16 +69,14 @@ void retornaTela(context,page){
               (Route<dynamic> route) => false,);
 }
 
-criaLoading(context,bool desativa){
+criaLoading(context){
   ProgressDialog pr;
   pr = new ProgressDialog(context);
   
   style(pr);
   pr.show();
 
-  if (desativa){
-    pr.hide();
-  }
+ 
 
   return pr;
 }

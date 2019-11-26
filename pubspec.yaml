@@ -19,6 +19,7 @@ environment:
 dependencies:
   build_runner:
   webview_flutter:
+  mailer: ^3.0.4
   json_serializable: ^3.2.2
   date_format:
   intl: ^0.15.8
