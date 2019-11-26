@@ -69,7 +69,7 @@ void retornaTela(context,page){
               (Route<dynamic> route) => false,);
 }
 
-void criaLoading(context,bool desativa){
+criaLoading(context,bool desativa){
   ProgressDialog pr;
   pr = new ProgressDialog(context);
   
@@ -79,19 +79,21 @@ void criaLoading(context,bool desativa){
   if (desativa){
     pr.hide();
   }
+
+  return pr;
 }
 
 void style(pr){
 
   pr.style(
     message: 'Carregando...',
-    borderRadius: 10.0,
+    borderRadius: 1.0,
     backgroundColor: Colors.white,
     progressWidget: CircularProgressIndicator(),
-    elevation: 10.0,
+    elevation: 1.0,
     insetAnimCurve: Curves.easeInOut,
     progress: 0.0,
-    maxProgress: 100.0,
+    maxProgress: 99.0,
     progressTextStyle: TextStyle(
       color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
     messageTextStyle: TextStyle(
