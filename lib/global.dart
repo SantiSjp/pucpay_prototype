@@ -155,6 +155,19 @@ String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
    return _insertCard;
 }
 
+String insertPagamento(valor,tipo,data){
+
+  String _insertPag = """
+  mutation{
+  insert_pagamentos(objects: {valor: "$valor", tipo: "$tipo", data: "$data", UID_PK: "$userId"}) {
+    affected_rows
+  }
+}""";
+
+return _insertPag;
+
+}
+
 String getCard(){
 
   String _getCard = """

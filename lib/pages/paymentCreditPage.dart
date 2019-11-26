@@ -158,6 +158,8 @@ void verificaCredito(context,_key,bool cApp) async{
 
     getCreditUser();
 
+    inserePagamento();
+
     exibirDialogo(context, "Concluido", "Estacionamento pago e validado com sucesso!", "Continuar", MenuScreen());
 
 
@@ -185,6 +187,7 @@ void verificaCartao(context,_key) async{
 
     String title = "Pago com sucesso!";
     String content = "Estacionamento pago e validado com sucesso";
+    inserePagamento();
     exibirDialogo(context, title, content, "Ok", MenuScreen());
 
   }catch(e){
@@ -210,5 +213,18 @@ void verificaCartao(context,_key) async{
     }
 
   }
+
+}
+
+void inserePagamento() async{
+
+  var now = new DateTime.now();
+  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString(); 
+
+  String insere = insertPagamento(5, 2, data);
+  print(insere);
+
+  var mutation = await conn.mutation(insere);
+  print(mutation);
 
 }
