@@ -63,6 +63,7 @@ class PrintingLog extends StatefulWidget {
 class _PrintingLogState extends State<PrintingLog> {
   List<Map> _printLogList;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -71,6 +72,7 @@ class _PrintingLogState extends State<PrintingLog> {
     fetchLogs(_scaffoldKey).then((result) {
       setState(() {
         _printLogList = result;
+        _isLoading = false;
       });
     });
   }
@@ -80,7 +82,21 @@ class _PrintingLogState extends State<PrintingLog> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(),
-      body: Column(
+      body: _isLoading ? 
+      Column( 
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+         Divider(height: 10,color: Colors.transparent,),
+          Text("Carregando Dados...")
+        ],
+      ) 
+      : Column(
         children: [
           Divider(height: 40,color: Colors.transparent),
           Center(child: Text(
