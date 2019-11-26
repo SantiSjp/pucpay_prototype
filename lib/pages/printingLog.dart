@@ -45,13 +45,13 @@ class LogInput extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    var listView = ListView.builder(
+    var listView = Scrollbar(child: ListView.builder(
       itemBuilder: _buildLogInput,
       itemCount: logList.length,
       padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
       shrinkWrap: true,
       itemExtent: 80,
-    );
+    ));
     return listView;
   }
 }
