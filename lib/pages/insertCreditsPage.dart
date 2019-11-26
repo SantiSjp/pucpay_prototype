@@ -264,7 +264,7 @@ Future<int> _getCredito(bEstacionamento,bImpressao) async{
 void inserePagamento(valor) async{
 
   var now = new DateTime.now();
-  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString(); 
+  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString() + "T" + now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString(); 
 
   String insere = insertPagamento(valor, 3, data);
   print(insere);
