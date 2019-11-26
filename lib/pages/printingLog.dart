@@ -20,11 +20,11 @@ class LogInput extends StatelessWidget {
           ),
           // Valor
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Center(child:Text("VALOR", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
               Divider(height: 6,),
-              Center(child:Text('R\$'+logList[index]['valor'].toString(), style: TextStyle(fontSize: 14, color: logList[index]['tipo'] == 3 ? Colors.green : Colors.red),)),
+              Center(child:Text("VALOR", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
+              Divider(height: 2,),
+              Center(child:Text('R\$ '+logList[index]['valor'].toString(), style: TextStyle(fontSize: 14, color: logList[index]['tipo'] == 3 ? Colors.green : Colors.red),)),
             ],
           ),
           // Data
@@ -32,8 +32,11 @@ class LogInput extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Center(child:Text("DATA", style: TextStyle(color: Color.fromARGB(255, 127, 120, 119), fontSize: 22, fontWeight: FontWeight.bold)),),
-              Divider(height: 6,),
+              Divider(height: 2,),
               Center(child:Text(logList[index]['data'].toString(), style: TextStyle(fontSize: 14),)),
+              Divider(height: 2,),
+              Center(child: Text(logList[index]['time'].toString(), style: TextStyle(fontSize: 10),),),
+
             ],
           )
         ],
@@ -126,7 +129,8 @@ Future<List<Map>> fetchLogs(_scaffoldKey) async {
     var map = pagamentos['data']['pagamentos'];
     for(var item in map) {
       var date = DateTime.parse(item['data'].toString());
-      logList.add({'data':formatDate(date,[dd,'/',mm,'/',yyyy]), 'valor':item['valor'], 'tipo':item['tipo']});
+      var valor = item['valor'].toString() + ",00";
+      logList.add({'data':formatDate(date,[dd,'/',mm,'/',yyyy]), 'time':formatDate(date,[HH,':',nn]), 'valor':valor, 'tipo':item['tipo']});
     }
     
     print(logList);
