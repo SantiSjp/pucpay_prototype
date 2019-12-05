@@ -18,9 +18,17 @@ environment:
 
 dependencies:
   build_runner:
+  webview_flutter:
   json_serializable: ^3.2.2
-  url_launcher: ^5.2.2
+  date_format:
+  intl: ^0.15.8
+  progress_dialog: ^1.2.0
   hasura_connect:
+  progress_indicators: ^0.1.4
+  url_launcher: ^5.2.5
+  http: ^0.12.0+2
+  barcode_scan: any
+  flutter_barcode_scanner: ^0.1.7
   uuid: ^2.0.2
   flutter:
     sdk: flutter
@@ -32,12 +40,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_icons: ^0.7.4
   
 flutter_icons:
-  android: "launcher_icon" 
+  android: true 
   ios: true
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/logo_t.png"
 
 
 # For information on the generic Dart part of this file, see the

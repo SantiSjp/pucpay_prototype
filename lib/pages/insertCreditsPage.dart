@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
+import 'selectPaymentPage.dart';
+import 'package:pucpay_prototype/funcoes.dart';
 
 enum TipoDeCredito {Impressao, Estacionamento}
 int _tipoCredito = 0;
@@ -21,7 +23,6 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Center(child: Text("PucPay",textAlign: TextAlign.center))
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -131,7 +132,7 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
                height: 50 ,
                 child: RaisedButton(
                 onPressed: (){
-                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao);
+                  insertCredits(_credito.text, _scaffoldKey,botaoEstacionamento,botaoImpressao, context);
                   setState(() {
                    botaoEstacionamento = false;
                    botaoImpressao = false; 
@@ -152,59 +153,69 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
 
-void insertCredits(credito, _key, bEstacionamento,bImpressao) async{
+void insertCredits(credito, _key, bEstacionamento,bImpressao, context) async{
 
   String insert;
   var valor;
-  int c;
-  print("aqui");
+  int newValor;
+  int valorBoleto;
 
-try {
+  try {
 
-  valor = await _getCredito(bEstacionamento,bImpressao);
-  print("here: " + valor.toString());
+    if(!botaoEstacionamento && !botaoImpressao){
+      throw new Exception("Escolha um tipo de crédito!");
+    }
+
+    if(credito == ''){
+      throw new Exception("Credito não pode ser nulo!");
+    }
+
+    //var pr = criaLoading(context, false);
+    valor = await _getCredito(bEstacionamento,bImpressao);
+    print("here: " + valor.toString());
 
 
-  c = int.parse(credito);
+    newValor = int.parse(credito);
+    valorBoleto = int.parse(credito);
+    
+    if(newValor <= 0){
+      throw new Exception("Valor não pode ser 0 ou negativo!");
+    }
 
-  if(c<=0){
-    throw new Exception("O valor do crédito não pode ser negativo");
-  }
+    newValor += valor;    
 
-  c += valor;
+    if(bEstacionamento){
+      insert = insertCredit(userId, newValor, 1);
+      //_nextScreen(context, PaymentCredit());
+    }
+    if(bImpressao){
+        insert = insertCredit(userId, newValor, 2);
+    }
 
-  if(!bEstacionamento && !bImpressao){
-    throw new Exception("Selecione um tipo de credito");
-  }
-  
-  if(bEstacionamento){
-    insert = insertCredit(userId, c, 1);
-  }
-  if(bImpressao){
-      insert = insertCredit(userId, c, 2);
-  }
+      var aux2 = await conn.mutation(insert);
+      print("insert: " + aux2.toString());
 
-    var aux2 = await conn.mutation(insert);
-    print("insert: " + aux2.toString());
+      inserePagamento(valorBoleto);
 
-    _key.currentState.showSnackBar(SnackBar(
-    content: Text("Creditos Inseridos"),
-    backgroundColor: Colors.green,
-    ));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => SelectPag(valorBoleto)),
+      );
 
-   //Navigator.pop(context);   
-  }catch (e) {
-    print(e);
+      //pr.hide();
 
-     _key.currentState.showSnackBar(SnackBar(
-      content: Text(e.message),
-      backgroundColor: Colors.redAccent,
-    ));
-  }
-  
+    //Navigator.pop(context);   
+    }catch (e) {
+      print(e);
+
+      _key.currentState.showSnackBar(SnackBar(
+        content: Text(e.message),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 2)
+      ));
+    }
 }
 
 Future<int> _getCredito(bEstacionamento,bImpressao) async{
+
   
   String credEst;
   String credImp;
@@ -248,4 +259,17 @@ Future<int> _getCredito(bEstacionamento,bImpressao) async{
 
   }
   return value;
+}
+
+void inserePagamento(valor) async{
+
+  var now = new DateTime.now();
+  var data = now.year.toString() + "-" + now.month.toString() + "-" + now.day.toString() + "T" + now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString(); 
+
+  String insere = insertPagamento(valor, 3, data);
+  print(insere);
+
+  var mutation = await conn.mutation(insere);
+  print(mutation);
+
 }

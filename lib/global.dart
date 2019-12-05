@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart' as prefix0;
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:flutter/material.dart';
-import 'package:pucpay_prototype/pages/loginPage.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 String url = 'https://puc-pay.herokuapp.com/v1/graphql';
 String error;
-HasuraConnect conn = HasuraConnect(url);
+HasuraConnect conn = HasuraConnect(url); 
 
 var userId;
 var nomeUser;
@@ -143,6 +142,50 @@ String getUserLog(mail, pass) {
   return getUserLog;
 }
 
+String insertCard(var uid, var cardNumber, var cvv, var nome, var validade){
+
+  String _insertCard = """
+  mutation {
+  insert_cards(objects: {UID_PK: "$uid", cvv: "$cvv", nome: "$nome", numero: "$cardNumber", validade: "$validade"}) {
+    affected_rows
+  }
+}
+   """;
+
+   return _insertCard;
+}
+
+String insertPagamento(valor,tipo,data){
+
+  String _insertPag = """
+  mutation{
+  insert_pagamentos(objects: {valor: "$valor", tipo: "$tipo", data: "$data", UID_PK: "$userId"}) {
+    affected_rows
+  }
+}""";
+
+return _insertPag;
+
+}
+
+String getCard(){
+
+  String _getCard = """
+  query {
+  cards(where: {UID_PK: {_eq: "$userId"}}) {
+    id
+  }
+}
+""";
+
+return _getCard;
+}
+
+
+String getPagamento() {
+  // return """ query { pagamentos(where: {UID_PK: {_eq: "$userId"}}) { data valor } } """;
+  return """ { pagamentos(where: {UID_PK: {_eq: "$userId"}}, order_by: {data: desc}) { data valor tipo } } """;
+}
 
 void exibirDialogo(context, String title, String content, String button, page){
   showDialog(
@@ -167,4 +210,10 @@ void exibirDialogo(context, String title, String content, String button, page){
   );
 }
   
- 
+void nextScreen(context, Widget route){
+  Navigator.push(
+    context, 
+    new MaterialPageRoute(builder: (context) => route),
+    );
+}
+

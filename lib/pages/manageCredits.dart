@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:pucpay_prototype/global.dart';
-import 'insertCreditsPage.dart';
+import 'package:pucpay_prototype/funcoes.dart';
 
-class ManageCredits extends StatelessWidget {
+class ManageCredits extends StatefulWidget {
+  @override
+  _ManageCreditsState createState() => _ManageCreditsState(); 
+}
+
+class _ManageCreditsState extends State<ManageCredits> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("",textAlign: TextAlign.center))
+        title: Center(child: Text("",textAlign: TextAlign.center)),
+        actions: <Widget>[
+           IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                getCreditUser();
+              });
+           }
+          )
+        ],
       ),
       body: Container(
       padding: EdgeInsets.all(25) ,
